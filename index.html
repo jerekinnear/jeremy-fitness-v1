@@ -125,6 +125,7 @@ button,a{cursor:pointer;font-family:inherit}
       <button class="nbtn" onclick="showTab('supp',this)">💊 Compléments</button>
       <button class="nbtn" onclick="showTab('sound',this)">🎵 Son & Fréquences</button>
       <button class="nbtn" onclick="showTab('smoke',this)">🚭 Stop Tabac</button>
+      <button class="nbtn" onclick="showTab('history',this)">📈 Résultats</button>
     </div>
   </div>
 </div>
@@ -293,6 +294,58 @@ button,a{cursor:pointer;font-family:inherit}
 
 </div>
 
+<div id="tab-history" style="display:none">
+
+  <div style="background:linear-gradient(135deg,#1E293B,#334155);border-radius:12px;padding:18px;margin-bottom:14px;text-align:center;color:#fff">
+    <div style="font-size:32px;margin-bottom:6px">📈</div>
+    <div style="font-size:16px;font-weight:800;margin-bottom:4px">Mes Résultats</div>
+    <div style="font-size:11px;color:#94A3B8;line-height:1.5">Historique · Mensurations · Progression</div>
+  </div>
+
+  <!-- Measurements input -->
+  <div class="card"><div class="card-body">
+    <span class="lbl">📏 MENSURATIONS</span>
+    <div style="font-size:12px;color:#64748B;margin-bottom:12px">Enregistre tes mesures pour suivre ta progression</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
+      <div><label style="font-size:10px;font-weight:700;color:#94A3B8;display:block;margin-bottom:3px">POIDS (kg)</label><input type="number" id="m-poids" step="0.1" placeholder="82.5" style="width:100%;padding:8px;border:1px solid #E2E8F0;border-radius:8px;font-size:14px;font-weight:700"></div>
+      <div><label style="font-size:10px;font-weight:700;color:#94A3B8;display:block;margin-bottom:3px">TOUR DE TAILLE (cm)</label><input type="number" id="m-taille" step="0.5" placeholder="90" style="width:100%;padding:8px;border:1px solid #E2E8F0;border-radius:8px;font-size:14px;font-weight:700"></div>
+      <div><label style="font-size:10px;font-weight:700;color:#94A3B8;display:block;margin-bottom:3px">TOUR DE POITRINE (cm)</label><input type="number" id="m-poitrine" step="0.5" placeholder="100" style="width:100%;padding:8px;border:1px solid #E2E8F0;border-radius:8px;font-size:14px;font-weight:700"></div>
+      <div><label style="font-size:10px;font-weight:700;color:#94A3B8;display:block;margin-bottom:3px">TOUR DE BRAS (cm)</label><input type="number" id="m-bras" step="0.5" placeholder="35" style="width:100%;padding:8px;border:1px solid #E2E8F0;border-radius:8px;font-size:14px;font-weight:700"></div>
+      <div><label style="font-size:10px;font-weight:700;color:#94A3B8;display:block;margin-bottom:3px">TOUR DE CUISSE (cm)</label><input type="number" id="m-cuisse" step="0.5" placeholder="55" style="width:100%;padding:8px;border:1px solid #E2E8F0;border-radius:8px;font-size:14px;font-weight:700"></div>
+      <div><label style="font-size:10px;font-weight:700;color:#94A3B8;display:block;margin-bottom:3px">POMPES MAX</label><input type="number" id="m-pompes" placeholder="10" style="width:100%;padding:8px;border:1px solid #E2E8F0;border-radius:8px;font-size:14px;font-weight:700"></div>
+    </div>
+    <button onclick="saveMyMeasurement()" style="width:100%;background:linear-gradient(135deg,#EF4444,#F97316);border:none;border-radius:10px;padding:12px;font-size:13px;font-weight:700;color:#fff;cursor:pointer">💾 Enregistrer les mesures</button>
+  </div></div>
+
+  <!-- Measurement history chart -->
+  <div class="card"><div class="card-body">
+    <span class="lbl">📊 ÉVOLUTION</span>
+    <div id="hist-measurements" style="font-size:12px;color:#64748B">Aucune mesure enregistrée</div>
+  </div></div>
+
+  <!-- Workout history -->
+  <div class="card"><div class="card-body">
+    <span class="lbl">🏋️ HISTORIQUE SÉANCES</span>
+    <div id="hist-workouts" style="font-size:12px;color:#64748B">Aucune séance enregistrée</div>
+  </div></div>
+
+  <!-- Smoke history -->
+  <div class="card"><div class="card-body">
+    <span class="lbl">🚭 HISTORIQUE TABAC</span>
+    <div id="hist-smoke" style="font-size:12px;color:#64748B">Aucune donnée tabac</div>
+  </div></div>
+
+  <!-- Export data -->
+  <div class="card"><div class="card-body">
+    <span class="lbl">💾 DONNÉES</span>
+    <div style="display:flex;gap:8px">
+      <button onclick="exportAllData()" style="flex:1;background:#EFF6FF;border:1px solid #BFDBFE;border-radius:8px;padding:10px;font-size:12px;font-weight:700;color:#1D4ED8;cursor:pointer">📤 Exporter JSON</button>
+      <label style="flex:1;background:#F0FDF4;border:1px solid #BBF7D0;border-radius:8px;padding:10px;font-size:12px;font-weight:700;color:#166534;cursor:pointer;text-align:center">📥 Importer<input type="file" accept=".json" onchange="importData(event)" style="display:none"></label>
+    </div>
+  </div></div>
+
+</div>
+
 </div>
 <script>
 const PH=[{n:"Fondation",c:"#F97316",bg:"#FFF7ED"},{n:"Construction",c:"#EAB308",bg:"#FEFCE8"},{n:"Intensification",c:"#22C55E",bg:"#F0FDF4"},{n:"Performance",c:"#3B82F6",bg:"#EFF6FF"}];
@@ -432,8 +485,114 @@ const PS=new Date("2026-03-23");
 let S={wk:1,dy:0,xp:0,str:0,chk:{},exp:{},bdg:[],la:null,alarm:false};
 let AT={};
 
-function save(){try{localStorage.setItem(SK,JSON.stringify({xp:S.xp,str:S.str,chk:S.chk,bdg:S.bdg,la:S.la,alarm:S.alarm}));}catch(e){}}
-function load(){try{const d=JSON.parse(localStorage.getItem(SK)||'{}');S.xp=d.xp||0;S.str=d.str||0;S.chk=d.chk||{};S.bdg=d.bdg||[];S.la=d.la||null;S.alarm=d.alarm||false;}catch(e){}}
+// ── IndexedDB Database ──────────────────────────────────────────────
+const DB_NAME='JeremyFitnessDB';
+const DB_VERSION=2;
+let db=null;
+
+function openDB(){
+  return new Promise((resolve,reject)=>{
+    const req=indexedDB.open(DB_NAME,DB_VERSION);
+    req.onupgradeneeded=function(e){
+      const d=e.target.result;
+      // State store (single record for app state)
+      if(!d.objectStoreNames.contains('state'))d.createObjectStore('state',{keyPath:'id'});
+      // Workout history
+      if(!d.objectStoreNames.contains('workouts')){
+        const ws=d.createObjectStore('workouts',{keyPath:'id',autoIncrement:true});
+        ws.createIndex('date','date');ws.createIndex('week','week');
+      }
+      // Body measurements
+      if(!d.objectStoreNames.contains('measurements')){
+        const ms=d.createObjectStore('measurements',{keyPath:'id',autoIncrement:true});
+        ms.createIndex('date','date');
+      }
+      // Smoke log
+      if(!d.objectStoreNames.contains('smokelog')){
+        const sl=d.createObjectStore('smokelog',{keyPath:'date'});
+      }
+      // Alarms/reminders
+      if(!d.objectStoreNames.contains('alarms')){
+        d.createObjectStore('alarms',{keyPath:'id'});
+      }
+    };
+    req.onsuccess=function(e){db=e.target.result;resolve(db);};
+    req.onerror=function(e){console.error('DB error:',e);reject(e);};
+  });
+}
+
+function dbPut(store,data){
+  return new Promise((resolve,reject)=>{
+    const tx=db.transaction(store,'readwrite');
+    tx.objectStore(store).put(data);
+    tx.oncomplete=()=>resolve();tx.onerror=e=>reject(e);
+  });
+}
+function dbGet(store,key){
+  return new Promise((resolve,reject)=>{
+    const tx=db.transaction(store,'readonly');
+    const req=tx.objectStore(store).get(key);
+    req.onsuccess=()=>resolve(req.result);req.onerror=e=>reject(e);
+  });
+}
+function dbGetAll(store){
+  return new Promise((resolve,reject)=>{
+    const tx=db.transaction(store,'readonly');
+    const req=tx.objectStore(store).getAll();
+    req.onsuccess=()=>resolve(req.result);req.onerror=e=>reject(e);
+  });
+}
+function dbDelete(store,key){
+  return new Promise((resolve,reject)=>{
+    const tx=db.transaction(store,'readwrite');
+    tx.objectStore(store).delete(key);
+    tx.oncomplete=()=>resolve();tx.onerror=e=>reject(e);
+  });
+}
+
+// Save state to IndexedDB + localStorage fallback
+function save(){
+  const data={xp:S.xp,str:S.str,chk:S.chk,bdg:S.bdg,la:S.la,alarm:S.alarm};
+  try{localStorage.setItem(SK,JSON.stringify(data));}catch(e){}
+  if(db)dbPut('state',{id:'main',...data}).catch(()=>{});
+}
+
+// Load state: try IndexedDB first, fallback localStorage
+function load(){
+  try{
+    const d=JSON.parse(localStorage.getItem(SK)||'{}');
+    S.xp=d.xp||0;S.str=d.str||0;S.chk=d.chk||{};S.bdg=d.bdg||[];S.la=d.la||null;S.alarm=d.alarm||false;
+  }catch(e){}
+}
+async function loadFromDB(){
+  if(!db)return;
+  try{
+    const d=await dbGet('state','main');
+    if(d){S.xp=d.xp||0;S.str=d.str||0;S.chk=d.chk||{};S.bdg=d.bdg||[];S.la=d.la||null;S.alarm=d.alarm||false;}
+  }catch(e){}
+}
+
+// ── Workout History ─────────────────────────────────────────────────
+async function saveWorkout(weekNum,dayNum,exercises,duration){
+  if(!db)return;
+  const w={date:new Date().toISOString(),dateStr:new Date().toLocaleDateString('fr-CH'),week:weekNum,day:dayNum,exercises:exercises,duration:duration||0,completed:true};
+  await dbPut('workouts',w);
+}
+async function getWorkoutHistory(){if(!db)return[];return dbGetAll('workouts');}
+
+// ── Body Measurements ───────────────────────────────────────────────
+async function saveMeasurement(data){
+  if(!db)return;
+  await dbPut('measurements',{date:new Date().toISOString(),dateStr:new Date().toLocaleDateString('fr-CH'),...data});
+}
+async function getMeasurements(){if(!db)return[];return dbGetAll('measurements');}
+
+// ── Smoke Log (IndexedDB) ───────────────────────────────────────────
+async function saveSmokeToDB(dateKey,count){
+  if(!db)return;
+  await dbPut('smokelog',{date:dateKey,count:count,timestamp:new Date().toISOString()});
+}
+async function getSmokeHistory(){if(!db)return[];return dbGetAll('smokelog');}
 function initDay(){
   const diff=Math.floor((new Date()-PS)/86400000),d=Math.max(0,diff);
   S.wk=Math.min(7,Math.floor(d/7)+1);S.dy=Math.min(6,d%7);
@@ -482,25 +641,78 @@ function tihtml(k){
   return`<div style="margin:4px 0 8px"><span class="tdisp${t.rem<=10?' warn':''}" style="border-color:#86EFAC;color:#166534">⏱ ${ts}</span></div>`;
 }
 
-// NOTIFICATIONS
+// NOTIFICATIONS — Service Worker powered
 function askNotif(){
   if(!('Notification' in window)){alert('Notifications non supportées sur ce navigateur.');return;}
-  Notification.requestPermission().then(p=>{if(p==='granted'){S.alarm=true;save();schedAlarm();document.getElementById('nbar').style.display='none';new Notification('✅ Réveil 6h00 activé !',{body:'Tu recevras une notification chaque matin.'});}});
+  Notification.requestPermission().then(p=>{
+    if(p==='granted'){
+      S.alarm=true;save();
+      schedAlarm();
+      registerAlarmSW();
+      document.getElementById('nbar').style.display='none';
+      showSWNotif('✅ Réveil 6h00 activé !','Tu recevras une notification chaque matin.');
+    }
+  });
 }
+
+// Show notification via Service Worker (persists even when app closed)
+function showSWNotif(title,body,tag){
+  if('serviceWorker' in navigator&&Notification.permission==='granted'){
+    navigator.serviceWorker.ready.then(reg=>{
+      reg.showNotification(title,{body:body,icon:'./icon-192.png',badge:'./icon-192.png',tag:tag||'jfit-notif',requireInteraction:true,vibrate:[200,100,200,100,200],actions:[{action:'open',title:'Ouvrir'},{action:'snooze',title:'Snooze 9min'}]});
+    }).catch(()=>{try{new Notification(title,{body:body});}catch(e){}});
+  }
+}
+
+// Register alarm schedule with Service Worker
+function registerAlarmSW(){
+  if('serviceWorker' in navigator){
+    navigator.serviceWorker.ready.then(reg=>{
+      // Store alarm config for SW to use
+      if(db)dbPut('alarms',{id:'morning',hour:6,minute:0,enabled:true,msg:MSGS[(S.wk*7+S.dy)%MSGS.length]});
+      // Try periodic background sync (Chrome Android)
+      if('periodicSync' in reg){
+        reg.periodicSync.register('morning-alarm',{minInterval:6*60*60*1000}).catch(()=>{});
+      }
+    });
+  }
+}
+
 function schedAlarm(){
   if(window._ato)clearTimeout(window._ato);
   const now=new Date(),nxt=new Date();nxt.setHours(6,0,0,0);if(now>=nxt)nxt.setDate(nxt.getDate()+1);
   window._ato=setTimeout(()=>{trigAlarm();setTimeout(schedAlarm,60000);},nxt-now);
 }
+
 function trigAlarm(){
   palarm();
   const msg=MSGS[(S.wk*7+S.dy)%MSGS.length];
   document.getElementById('almsg').textContent=`"${msg}"`;
   document.getElementById('alarm').classList.add('open');
-  if(Notification.permission==='granted'){try{new Notification('⏰ Jeremy — 6h00 !',{body:msg,requireInteraction:true});}catch(e){}}
+  showSWNotif('⏰ Jeremy — 6h00 !',msg,'morning-alarm');
 }
 function dismissAlarm(){document.getElementById('alarm').classList.remove('open');closeMorning();document.getElementById('morning').classList.remove('hidden');renderMorning();}
-function snooze(){document.getElementById('alarm').classList.remove('open');if(window._snto)clearTimeout(window._snto);window._snto=setTimeout(trigAlarm,9*60*1000);}
+function snooze(){
+  document.getElementById('alarm').classList.remove('open');
+  if(window._snto)clearTimeout(window._snto);
+  window._snto=setTimeout(trigAlarm,9*60*1000);
+  showSWNotif('😴 Snooze','Prochaine alarme dans 9 minutes...','snooze');
+}
+
+// Notification for workout reminders
+function schedWorkoutReminder(hour,min,msg){
+  const now=new Date(),nxt=new Date();nxt.setHours(hour,min,0,0);
+  if(now>=nxt)nxt.setDate(nxt.getDate()+1);
+  setTimeout(()=>showSWNotif('🏋️ Séance !',msg,'workout-reminder'),nxt-now);
+}
+
+// Listen for notification clicks from Service Worker
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.addEventListener('message',function(e){
+    if(e.data&&e.data.action==='snooze')snooze();
+    if(e.data&&e.data.action==='open'){document.getElementById('alarm').classList.remove('open');closeMorning();}
+  });
+}
 
 // ICS EXPORT
 function pad2(n){return String(n).padStart(2,'0')}
@@ -609,7 +821,7 @@ function rtr(){
     list.appendChild(row);
   });
   document.getElementById('dbanner').style.display=pct===100?'block':'none';
-  if(pct===100)ubdg('first');
+  if(pct===100){ubdg('first');autoSaveWorkout(tr,pct);}
 }
 function tipPanel(tk){
   const t=TIPS[tk];if(!t)return'';
@@ -663,23 +875,146 @@ function openBoss(){const ph=PH[gp(S.wk)];document.getElementById('btit').textCo
 
 // NAV
 function showTab(id,btn){
-  ['today','prog','shop','supp','sound','smoke'].forEach(t=>document.getElementById('tab-'+t).style.display=t===id?'block':'none');
+  ['today','prog','shop','supp','sound','smoke','history'].forEach(t=>document.getElementById('tab-'+t).style.display=t===id?'block':'none');
   document.querySelectorAll('.nbtn').forEach(b=>b.classList.remove('active'));
   if(btn)btn.classList.add('active');
   if(id==='prog'){rbdg();rbody();rwks();}
   if(id==='shop')rshop();
   if(id==='supp')rsupp();
   if(id==='sound'){renderSound();startViz();}
-  if(id==='smoke'){renderSmoke();}
-  if(id==='smoke'){renderSmoke();}
+  if(id==='smoke')renderSmoke();
+  if(id==='history')renderHistory();
+}
+
+// ── HISTORY TAB ─────────────────────────────────────────────────────
+async function saveMyMeasurement(){
+  const poids=parseFloat(document.getElementById('m-poids').value);
+  const taille=parseFloat(document.getElementById('m-taille').value);
+  const poitrine=parseFloat(document.getElementById('m-poitrine').value);
+  const bras=parseFloat(document.getElementById('m-bras').value);
+  const cuisse=parseFloat(document.getElementById('m-cuisse').value);
+  const pompes=parseInt(document.getElementById('m-pompes').value);
+  if(!poids&&!taille&&!poitrine&&!bras&&!cuisse&&!pompes){alert('Remplis au moins un champ !');return;}
+  const data={};
+  if(poids)data.poids=poids;if(taille)data.taille=taille;
+  if(poitrine)data.poitrine=poitrine;if(bras)data.bras=bras;
+  if(cuisse)data.cuisse=cuisse;if(pompes)data.pompes=pompes;
+  data.week=S.wk;data.day=S.dy;
+  await saveMeasurement(data);
+  ['m-poids','m-taille','m-poitrine','m-bras','m-cuisse','m-pompes'].forEach(id=>document.getElementById(id).value='');
+  toast('Mesures enregistrées !');
+  renderHistory();
+}
+
+async function renderHistory(){
+  // Measurements
+  const measures=await getMeasurements();
+  const mEl=document.getElementById('hist-measurements');
+  if(measures.length>0){
+    let h='<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:11px">';
+    h+='<tr style="background:#F1F5F9"><th style="padding:6px;text-align:left">Date</th><th>Poids</th><th>Taille</th><th>Poitrine</th><th>Bras</th><th>Cuisse</th><th>Pompes</th></tr>';
+    measures.slice(-10).reverse().forEach(m=>{
+      h+=`<tr style="border-bottom:1px solid #F1F5F9">`;
+      h+=`<td style="padding:5px;font-weight:600">${m.dateStr||'-'}</td>`;
+      h+=`<td style="padding:5px;text-align:center">${m.poids||'-'}</td>`;
+      h+=`<td style="padding:5px;text-align:center">${m.taille||'-'}</td>`;
+      h+=`<td style="padding:5px;text-align:center">${m.poitrine||'-'}</td>`;
+      h+=`<td style="padding:5px;text-align:center">${m.bras||'-'}</td>`;
+      h+=`<td style="padding:5px;text-align:center">${m.cuisse||'-'}</td>`;
+      h+=`<td style="padding:5px;text-align:center;font-weight:700;color:#EF4444">${m.pompes||'-'}</td>`;
+      h+='</tr>';
+    });
+    h+='</table></div>';
+    // Show trend if 2+ entries
+    if(measures.length>=2){
+      const first=measures[0],last=measures[measures.length-1];
+      h+='<div style="margin-top:10px;padding:10px;background:#F0FDF4;border-radius:8px;font-size:12px">';
+      h+='<div style="font-weight:700;color:#166534;margin-bottom:6px">📊 Tendance</div>';
+      if(first.poids&&last.poids){const d=(last.poids-first.poids).toFixed(1);h+=`<div>Poids : ${d>0?'+':''}${d} kg ${d<0?'✅':'⚠️'}</div>`;}
+      if(first.taille&&last.taille){const d=(last.taille-first.taille).toFixed(1);h+=`<div>Taille : ${d>0?'+':''}${d} cm ${d<0?'✅':'⚠️'}</div>`;}
+      if(first.pompes&&last.pompes){const d=last.pompes-first.pompes;h+=`<div>Pompes : ${d>0?'+':''}${d} ${d>0?'✅':'⚠️'}</div>`;}
+      h+='</div>';
+    }
+    mEl.innerHTML=h;
+  }else{mEl.innerHTML='<div style="text-align:center;padding:16px;color:#94A3B8">Aucune mesure. Commence en haut ! ☝️</div>';}
+
+  // Workout history
+  const workouts=await getWorkoutHistory();
+  const wEl=document.getElementById('hist-workouts');
+  if(workouts.length>0){
+    let h='';
+    workouts.slice(-10).reverse().forEach(w=>{
+      const exDone=w.exercises?w.exercises.filter(e=>e.done).length:0;
+      const exTotal=w.exercises?w.exercises.length:0;
+      h+=`<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #F1F5F9">`;
+      h+=`<div><div style="font-weight:700;font-size:12px">S${w.week} · ${DS[w.day]||'?'}</div><div style="font-size:10px;color:#94A3B8">${w.dateStr}</div></div>`;
+      h+=`<div style="text-align:right"><span style="background:#F0FDF4;color:#16A34A;padding:3px 8px;border-radius:12px;font-size:11px;font-weight:700">${exDone}/${exTotal} ✓</span></div>`;
+      h+='</div>';
+    });
+    wEl.innerHTML=h;
+  }else{wEl.innerHTML='<div style="text-align:center;padding:16px;color:#94A3B8">Complète ta première séance !</div>';}
+
+  // Smoke history
+  const smokes=await getSmokeHistory();
+  const sEl=document.getElementById('hist-smoke');
+  if(smokes.length>0){
+    let h='<div style="display:flex;gap:6px;flex-wrap:wrap">';
+    smokes.slice(-14).forEach(s=>{
+      const col=s.count===0?'#22C55E':s.count<=5?'#F97316':'#EF4444';
+      h+=`<div style="background:${col}15;border:1px solid ${col}40;border-radius:8px;padding:6px 10px;text-align:center;min-width:60px">`;
+      h+=`<div style="font-size:14px;font-weight:900;color:${col}">${s.count}</div>`;
+      h+=`<div style="font-size:9px;color:#64748B">${s.date.slice(5)}</div></div>`;
+    });
+    h+='</div>';
+    if(smokes.length>=2){
+      const first=smokes[0].count,last=smokes[smokes.length-1].count;
+      const d=last-first;
+      h+=`<div style="margin-top:8px;font-size:12px;font-weight:700;color:${d<=0?'#16A34A':'#DC2626'}">${d<=0?'📉':'📈'} ${Math.abs(d)} cigarettes ${d<=0?'en moins':'en plus'} depuis le début</div>`;
+    }
+    sEl.innerHTML=h;
+  }else{sEl.innerHTML='<div style="text-align:center;padding:16px;color:#94A3B8">Aucune donnée tabac</div>';}
+}
+
+// ── Export / Import ─────────────────────────────────────────────────
+async function exportAllData(){
+  const data={
+    state:{xp:S.xp,str:S.str,chk:S.chk,bdg:S.bdg,la:S.la,alarm:S.alarm},
+    measurements:await getMeasurements(),
+    workouts:await getWorkoutHistory(),
+    smokelog:await getSmokeHistory(),
+    exportDate:new Date().toISOString()
+  };
+  dl(JSON.stringify(data,null,2),'jeremy-fitness-backup.json','application/json');
+  toast('Données exportées !');
+}
+
+async function importData(e){
+  const file=e.target.files[0];if(!file)return;
+  const text=await file.text();
+  try{
+    const data=JSON.parse(text);
+    if(data.state){S.xp=data.state.xp||0;S.str=data.state.str||0;S.chk=data.state.chk||{};S.bdg=data.state.bdg||[];S.la=data.state.la||null;S.alarm=data.state.alarm||false;save();}
+    if(data.measurements&&db){for(const m of data.measurements)await dbPut('measurements',m);}
+    if(data.workouts&&db){for(const w of data.workouts)await dbPut('workouts',w);}
+    if(data.smokelog&&db){for(const s of data.smokelog)await dbPut('smokelog',s);}
+    toast('Données importées !');ra();renderHistory();
+  }catch(err){alert('Fichier invalide : '+err.message);}
 }
 function ra(){uph();rwk();rdk();rwalk();rtr();rmen();rdef();}
 
 // INIT
 load();initDay();
-if('Notification' in window&&Notification.permission!=='granted'&&!S.alarm)document.getElementById('nbar').style.display='block';
-if(S.alarm&&Notification.permission==='granted')schedAlarm();
-renderMorning();ra();
+// Initialize IndexedDB then reload state
+openDB().then(()=>loadFromDB()).then(()=>{
+  if('Notification' in window&&Notification.permission!=='granted'&&!S.alarm)document.getElementById('nbar').style.display='block';
+  if(S.alarm&&Notification.permission==='granted'){schedAlarm();registerAlarmSW();}
+  renderMorning();ra();
+}).catch(()=>{
+  // Fallback: localStorage already loaded
+  if('Notification' in window&&Notification.permission!=='granted'&&!S.alarm)document.getElementById('nbar').style.display='block';
+  if(S.alarm&&Notification.permission==='granted')schedAlarm();
+  renderMorning();ra();
+});
 
 // ══ SOUND ENGINE ══════════════════════════════════════════════════════════════
 let audioCtx=null,soundNodes={},vizAnim=null,vizRunning=false;
@@ -990,8 +1325,28 @@ function saveSmokeLog(){
   const val=parseInt(document.getElementById('sm-input').value);
   if(isNaN(val)||val<0)return;
   smData.log[todayKey()]=val;smSave();
+  saveSmokeToDB(todayKey(),val);
   closeSmokeLog();renderSmoke();
   toast(val===0?'0 cigarette INCROYABLE':val<=SMOKE_PLAN[currentSmWeek()-1].cigs?'Objectif respecte: '+val+' clopes':'Au-dessus objectif — demain tu reprends');
+}
+
+// ── Toast notification ──────────────────────────────────────────────
+function toast(msg){
+  let t=document.getElementById('jfit-toast');
+  if(!t){t=document.createElement('div');t.id='jfit-toast';t.style.cssText='position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#1E293B;color:#fff;padding:10px 20px;border-radius:12px;font-size:13px;font-weight:600;z-index:999;opacity:0;transition:opacity .3s;pointer-events:none;max-width:90%;text-align:center';document.body.appendChild(t);}
+  t.textContent=msg;t.style.opacity='1';
+  clearTimeout(window._toastT);window._toastT=setTimeout(()=>{t.style.opacity='0';},3000);
+}
+
+// ── Auto-save workout to IndexedDB on completion ────────────────────
+let _lastSavedWorkout='';
+function autoSaveWorkout(tr,pct){
+  if(pct<100)return;
+  const key=`w${S.wk}d${S.dy}`;
+  if(_lastSavedWorkout===key)return;
+  _lastSavedWorkout=key;
+  const exercises=tr.ex.map(ex=>({name:ex.l,desc:ex.d,done:!!S.chk[`e${S.wk}_${S.dy}_${tr.ex.indexOf(ex)}`]}));
+  saveWorkout(S.wk,S.dy,exercises,0);
 }
 
 </script>
