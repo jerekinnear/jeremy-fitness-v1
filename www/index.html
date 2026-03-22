@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Jeremy Fitness">
+<meta name="theme-color" content="#EF4444">
+<meta name="description" content="Programme fitness 7 semaines + protocole LMF + Stop Tabac">
+<link rel="manifest" href="./manifest.json">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<title>Jeremy Fitness — Gencie</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#F8FAFC;color:#1E293B;min-height:100vh}
+button,a{cursor:pointer;font-family:inherit}
+.card{background:#fff;border-radius:12px;border:1px solid #E2E8F0;margin-bottom:12px;overflow:hidden}
+.card-body{padding:14px 16px}
+.chip{border:none;border-radius:20px;padding:5px 12px;font-size:11px;font-weight:500;cursor:pointer;transition:all .15s}
+.pill{font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;letter-spacing:1px;display:inline-block}
+.lbl{font-size:10px;font-weight:700;letter-spacing:2px;color:#94A3B8;margin-bottom:8px;display:block}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.chk{width:22px;height:22px;border-radius:6px;border:2px solid #E2E8F0;background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;transition:all .15s;font-size:12px;font-weight:700;color:#fff;min-width:22px}
+.tip-panel{background:#F8FAFC;border:1px solid #E2E8F0;border-radius:8px;padding:12px;margin-bottom:8px;font-size:12px;color:#475569;line-height:1.5}
+.tip-sec{margin-bottom:7px}.tip-sec:last-child{margin-bottom:0}
+.tip-lbl{font-size:10px;font-weight:700;letter-spacing:1px;display:block;margin-bottom:2px}
+.xb{background:#F1F5F9;border-radius:10px;height:5px;margin-top:3px}
+.xbf{border-radius:10px;height:5px;transition:width .4s}
+.wt{text-align:center;border:2px solid #E2E8F0;border-radius:8px;padding:10px 4px;cursor:pointer;background:#F8FAFC;transition:all .15s}
+.wt.done{background:#F0FDF4;border-color:#22C55E}
+.tbtn{border:none;border-radius:6px;padding:3px 8px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap}
+.tdisp{display:inline-flex;align-items:center;gap:6px;background:#F0FDF4;border:1px solid #86EFAC;border-radius:8px;padding:4px 10px;font-size:14px;font-weight:900;color:#166534}
+.tdisp.warn{background:#FEF9C3;border-color:#FDE047;color:#92400E}
+.tdisp.hw{background:#FEF2F2;border-color:#FCA5A5;color:#991B1B}
+.tdisp.hr{background:#F0FDF4;border-color:#86EFAC;color:#166534}
+#morning{position:fixed;inset:0;background:linear-gradient(135deg,#0F172A 0%,#1E1B4B 50%,#0F172A 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;z-index:200;text-align:center;overflow-y:auto}
+#morning.hidden{display:none}
+.lbtn{background:linear-gradient(135deg,#EF4444,#F97316);border:none;border-radius:16px;padding:16px 40px;font-size:15px;font-weight:900;color:#fff;letter-spacing:2px;box-shadow:0 8px 32px rgba(239,68,68,.4);text-transform:uppercase;width:100%;max-width:280px}
+#bt{position:fixed;top:16px;left:16px;right:16px;background:#1E293B;border-radius:14px;padding:14px;z-index:400;text-align:center;display:none}
+#hdr{background:#fff;border-bottom:1px solid #E2E8F0;box-shadow:0 1px 4px rgba(0,0,0,.06);position:sticky;top:0;z-index:100}
+.nb{display:flex;overflow-x:auto;scrollbar-width:none;border-top:1px solid #F1F5F9}
+.nb::-webkit-scrollbar{display:none}
+.nbtn{flex-shrink:0;background:none;border:none;border-bottom:2px solid transparent;padding:10px 12px;font-size:12px;font-weight:500;color:#94A3B8;white-space:nowrap}
+.nbtn.active{color:#EF4444;border-bottom-color:#EF4444;font-weight:700}
+.wgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.bgrid{display:flex;gap:8px;justify-content:space-around;padding:8px 0}
+.done-banner{background:linear-gradient(135deg,#F0FDF4,#DCFCE7);border:1px solid #86EFAC;border-radius:10px;padding:14px;text-align:center;margin-top:12px}
+#boss{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:250;display:none;align-items:center;justify-content:center;padding:16px}
+#boss.open{display:flex}
+.bc{background:#0F172A;border-radius:20px;padding:24px;width:100%;max-width:360px}
+#alarm{position:fixed;inset:0;background:linear-gradient(135deg,#0F172A,#1E1B4B);z-index:500;display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px}
+#alarm.open{display:flex}
+.expbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.expbtn{flex:1;min-width:120px;border:none;border-radius:10px;padding:10px 12px;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px}
+#nbar{background:#EFF6FF;border:1px solid #BFDBFE;border-radius:10px;padding:12px 14px;margin-bottom:12px;display:none}
+</style>
+</head>
+<body>
+
+<div id="alarm">
+  <div style="font-size:56px;margin-bottom:16px">⏰</div>
+  <div style="font-size:26px;font-weight:900;color:#F1F5F9;margin-bottom:8px">6h00 — C'est l'heure !</div>
+  <p id="almsg" style="font-size:14px;color:#94A3B8;max-width:280px;line-height:1.6;margin-bottom:24px;font-style:italic"></p>
+  <button onclick="dismissAlarm()" style="background:linear-gradient(135deg,#EF4444,#F97316);border:none;border-radius:14px;padding:16px 40px;font-size:15px;font-weight:900;color:#fff;width:100%;max-width:260px">🚀 LANCE LA SÉANCE</button>
+  <div onclick="snooze()" style="margin-top:16px;font-size:12px;color:#475569;cursor:pointer">Snooze 9 min</div>
+</div>
+
+<div id="morning">
+  <div style="margin-bottom:12px">
+    <div style="font-size:48px">🔥</div>
+    <div id="sbig" style="font-size:38px;font-weight:900;color:#F97316">0</div>
+    <div style="font-size:11px;letter-spacing:3px;color:#64748B;text-transform:uppercase">jours consécutifs</div>
+  </div>
+  <div id="mbody" style="width:110px;margin:0 auto 12px"></div>
+  <div id="mphase" style="border-radius:20px;padding:4px 14px;margin-bottom:12px;font-size:10px;font-weight:700;letter-spacing:3px;display:inline-block"></div>
+  <p id="mmsg" style="font-size:14px;color:#E2E8F0;line-height:1.7;font-style:italic;max-width:280px;margin-bottom:16px"></p>
+  <div style="width:100%;max-width:280px;margin-bottom:16px">
+    <div style="display:flex;justify-content:space-between;margin-bottom:5px"><span id="lvlm" style="font-size:11px;color:#64748B"></span><span id="xpm" style="font-size:11px;font-weight:700;color:#F97316"></span></div>
+    <div style="background:#1E293B;border-radius:20px;height:8px"><div id="xbm" style="border-radius:20px;height:8px;width:0%;transition:width .5s"></div></div>
+  </div>
+  <button class="lbtn" onclick="closeMorning()">🚀 LANCE LA SÉANCE</button>
+  <div onclick="closeMorning()" style="margin-top:14px;font-size:12px;color:#334155">Passer →</div>
+</div>
+
+<div id="bt">
+  <div id="bticon" style="font-size:26px"></div>
+  <div style="font-size:13px;font-weight:800;color:#F1F5F9;margin-top:4px">Badge débloqué !</div>
+  <div id="btname" style="font-size:12px;font-weight:700;margin-top:2px"></div>
+  <div id="btxp" style="font-size:11px;color:#EAB308;font-weight:700;margin-top:2px"></div>
+</div>
+
+<div id="boss">
+  <div class="bc" id="bci">
+    <div style="text-align:center;margin-bottom:16px">
+      <div style="font-size:36px">🏆</div>
+      <div id="btit" style="font-size:17px;font-weight:900;color:#F1F5F9;margin-top:6px"></div>
+    </div>
+    <div class="g2" style="margin-bottom:16px">
+      <div style="background:#1E293B;border-radius:10px;padding:12px;text-align:center"><div>⚡</div><div id="bxp" style="font-size:17px;font-weight:900;color:#F97316;margin-top:4px"></div><div style="font-size:10px;color:#64748B">XP TOTAL</div></div>
+      <div style="background:#1E293B;border-radius:10px;padding:12px;text-align:center"><div>🔥</div><div id="bstr" style="font-size:17px;font-weight:900;color:#F97316;margin-top:4px"></div><div style="font-size:10px;color:#64748B">STREAK</div></div>
+    </div>
+    <button onclick="document.getElementById('boss').classList.remove('open')" style="width:100%;background:linear-gradient(135deg,#F97316,#EF4444);border:none;border-radius:10px;padding:13px;font-size:14px;font-weight:700;color:#fff">Continuer →</button>
+  </div>
+</div>
+
+<div id="hdr">
+  <div style="padding:10px 16px 0;max-width:600px;margin:0 auto">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-wrap:wrap;gap:6px">
+      <div onclick="document.getElementById('morning').classList.remove('hidden');renderMorning()" style="cursor:pointer">
+        <div style="font-size:11px;font-weight:800;color:#EF4444;letter-spacing:1px">GENCIE FITNESS</div>
+        <div id="lvh" style="font-size:10px;color:#94A3B8">Jeremy · 🪖 Recrue</div>
+      </div>
+      <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
+        <div style="display:flex;align-items:center;gap:4px;background:#FFF7ED;border:1px solid #FED7AA;border-radius:20px;padding:4px 8px"><span>🔥</span><span id="strh" style="font-size:12px;font-weight:800;color:#F97316">0</span></div>
+        <div style="min-width:80px"><div style="display:flex;justify-content:space-between"><span id="lvs" style="font-size:10px;color:#94A3B8"></span><span id="xps" style="font-size:10px;font-weight:700;color:#F97316"></span></div><div class="xb"><div id="xbh" class="xbf"></div></div></div>
+        <span id="pchip" style="font-size:10px;font-weight:700;padding:4px 8px;border-radius:20px;border:1px solid transparent"></span>
+        <button onclick="openBoss()" style="background:#1E293B;color:#EAB308;border:none;border-radius:20px;padding:4px 10px;font-size:11px;font-weight:700">🏆</button>
+      </div>
+    </div>
+    <div class="nb">
+      <button class="nbtn active" onclick="showTab('today',this)">📅 Aujourd'hui</button>
+      <button class="nbtn" onclick="showTab('prog',this)">📊 Programme</button>
+      <button class="nbtn" onclick="showTab('shop',this)">🛒 Courses</button>
+      <button class="nbtn" onclick="showTab('supp',this)">💊 Compléments</button>
+      <button class="nbtn" onclick="showTab('sound',this)">🎵 Son & Fréquences</button>
+      <button class="nbtn" onclick="showTab('smoke',this)">🚭 Stop Tabac</button>
+    </div>
+  </div>
+</div>
+
+<div style="max-width:600px;margin:0 auto;padding:16px">
+
+<div id="tab-today">
+  <div id="nbar"><div style="font-size:12px;color:#1D4ED8">🔔 Active les notifications pour recevoir ton réveil à 6h00 !</div><button onclick="askNotif()" style="margin-top:8px;background:#3B82F6;color:#fff;border:none;border-radius:8px;padding:8px 16px;font-size:12px;font-weight:700;width:100%">Activer réveil 6h00 + notifications</button></div>
+  <div class="expbar">
+    <button class="expbtn" onclick="dlICS()" style="background:#EFF6FF;color:#1D4ED8">📅 Exporter agenda (.ics)</button>
+    <button class="expbtn" onclick="dlTCX()" style="background:#F0FDF4;color:#166534">⌚ Exporter Garmin (.tcx)</button>
+  </div>
+  <div class="card"><div class="card-body">
+    <span class="lbl">SEMAINE</span><div id="wchips" style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px"></div>
+    <span class="lbl">JOUR</span><div id="dchips" style="display:flex;gap:5px;flex-wrap:wrap"></div>
+  </div></div>
+  <div class="card" style="border-left:4px solid #22C55E"><div class="card-body">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:8px">
+      <div><div style="font-size:13px;font-weight:800">🐕 Sorties chien — 4×30 min</div><div style="font-size:11px;color:#94A3B8;margin-top:2px">~400 kcal · Levier #1</div></div>
+      <span id="wct" style="background:#F0FDF4;color:#16A34A;font-size:12px;font-weight:700;padding:4px 10px;border-radius:20px;border:1px solid #BBF7D0">0/4</span>
+    </div>
+    <div class="wgrid" id="wgrid"></div>
+  </div></div>
+  <div class="card" id="tcard"><div class="card-body">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;margin-bottom:12px">
+      <div><div id="ttags" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px"></div><div id="ttit" style="font-size:17px;font-weight:800"></div><div id="tslot" style="font-size:12px;color:#94A3B8;margin-top:3px"></div></div>
+      <div style="position:relative;width:54px;height:54px;flex-shrink:0">
+        <svg viewBox="0 0 54 54" width="54" height="54"><circle fill="none" stroke="#F1F5F9" stroke-width="6" cx="27" cy="27" r="22"/><circle id="rfg" fill="none" stroke="#EF4444" stroke-width="6" cx="27" cy="27" r="22" stroke-linecap="round" stroke-dasharray="138.2" stroke-dashoffset="138.2" transform="rotate(-90 27 27)" style="transition:stroke-dashoffset .4s"/></svg>
+        <div id="rpct" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#EF4444"></div>
+      </div>
+    </div>
+    <span class="lbl">SÉANCE — Coche chaque exercice terminé</span>
+    <div id="exlist"></div>
+    <div id="dbanner" class="done-banner" style="display:none"><div style="font-size:24px">🎉</div><div style="font-size:14px;font-weight:800;color:#166534;margin-top:4px">Séance complète ! +200 XP</div></div>
+  </div></div>
+  <div class="card"><div class="card-body">
+    <span class="lbl">MENUS DU JOUR · ~2400 kcal</span>
+    <div id="mlist"></div>
+    <div style="background:#FFF7ED;border-radius:8px;padding:10px 12px;margin-top:8px;font-size:12px;color:#92400E">🍽 <strong>Règle soir :</strong> Demi-portion féculents pour toi · même recette famille</div>
+  </div></div>
+  <div style="background:#F0FDF4;border:1px solid #BBF7D0;border-radius:10px;padding:12px 14px;margin-bottom:12px">
+    <span class="lbl" style="color:#16A34A">DÉFICIT JOURNALIER</span>
+    <div id="dchips2" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px"></div>
+    <div id="dtotal" style="font-size:13px;font-weight:700;color:#166534"></div>
+  </div>
+</div>
+
+<div id="tab-prog" style="display:none">
+  <div class="card"><div class="card-body"><span class="lbl">TES BADGES</span><div id="bgrid" style="display:flex;gap:10px;flex-wrap:wrap"></div></div></div>
+  <div class="card"><div class="card-body"><span class="lbl">TRANSFORMATION CORPORELLE</span><div class="bgrid" id="bodygrid"></div></div></div>
+  <span class="lbl" style="margin-bottom:10px">7 SEMAINES</span>
+  <div id="wlist"></div>
+</div>
+
+<div id="tab-shop" style="display:none">
+  <div style="background:#FFF7ED;border:1px solid #FED7AA;border-radius:10px;padding:12px 14px;margin-bottom:12px;font-size:13px;color:#92400E">🛒 <strong>Courses du mercredi</strong> · 4 personnes · Budget 150-190 CHF</div>
+  <div id="shoplist"></div>
+</div>
+
+<div id="tab-supp" style="display:none">
+  <div style="background:#FFF7ED;border:1px solid #FED7AA;border-radius:10px;padding:12px 14px;margin-bottom:12px;font-size:13px;color:#92400E">💊 Budget : <strong>~130-160 CHF/mois</strong> · Myprotein, Decathlon ou pharmacie Sion</div>
+  <div id="supplist"></div>
+</div>
+
+<div id="tab-sound" style="display:none">
+  <div style="background:linear-gradient(135deg,#1E1B4B,#312E81);border-radius:12px;padding:16px;margin-bottom:14px;color:#fff;text-align:center">
+    <div style="font-size:28px;margin-bottom:6px">🎵</div>
+    <div style="font-size:15px;font-weight:800;margin-bottom:4px">Son & Fréquences</div>
+    <div style="font-size:11px;color:#A5B4FC;line-height:1.5">Binaural beats prouvés · Cortisol↓ · cAMP↑ · LMF Protocol</div>
+  </div>
+
+  <!-- SOUND ENGINE CONTROLS -->
+  <div class="card">
+    <div class="card-body" style="text-align:center">
+      <div style="font-size:11px;font-weight:700;letter-spacing:2px;color:#94A3B8;margin-bottom:12px">LECTEUR ACTIF</div>
+      <div id="sound-name" style="font-size:16px;font-weight:800;color:#1E293B;margin-bottom:4px">—</div>
+      <div id="sound-freq" style="font-family:monospace;font-size:13px;color:#7C3AED;margin-bottom:16px">Inactif</div>
+      <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+        <button onclick="stopSound()" style="background:#F1F5F9;border:none;border-radius:8px;padding:10px 20px;font-size:13px;font-weight:700;color:#64748B">⏹ Stop</button>
+        <div style="display:flex;align-items:center;gap:8px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:8px;padding:8px 12px">
+          <span style="font-size:12px;color:#64748B">Vol</span>
+          <input type="range" id="vol-slider" min="0" max="100" value="40" style="width:80px;accent-color:#7C3AED" oninput="setVol(this.value)">
+          <span id="vol-val" style="font-family:monospace;font-size:11px;color:#7C3AED;min-width:28px">40%</span>
+        </div>
+      </div>
+      <!-- Visualizer -->
+      <canvas id="viz-canvas" width="300" height="40" style="margin-top:12px;border-radius:8px;background:#F8FAFC;width:100%;max-width:300px;display:block;margin:12px auto 0"></canvas>
+    </div>
+  </div>
+
+  <!-- PROGRAMMES PAR MOMENT -->
+  <div style="font-size:10px;font-weight:700;letter-spacing:2px;color:#94A3B8;margin-bottom:8px">PROGRAMME PAR MOMENT</div>
+
+  <div id="sound-programs"></div>
+
+  <!-- SCIENCE NOTE -->
+  <div style="background:#F0FDF4;border:1px solid #BBF7D0;border-radius:10px;padding:12px 14px;margin-bottom:12px">
+    <div style="font-size:10px;font-weight:700;letter-spacing:2px;color:#16A34A;margin-bottom:6px">🧬 LIEN SCIENTIFIQUE LMF</div>
+    <div style="font-size:12px;color:#166534;line-height:1.6">Cortisol chronique → active PDE3B → détruit cAMP → bloque lipolyse dans les lipomes.<br><strong>Binaural beats thêta (4-7 Hz)</strong> réduisent le cortisol de façon mesurable (RCT 60 jours, p=0.004). C'est la même cible moléculaire que la caféine — par voie neurologique.</div>
+  </div>
+
+  <!-- FREQUENCES TABLE -->
+  <div class="card">
+    <div class="card-body" style="padding:0">
+      <div style="padding:12px 14px;border-bottom:1px solid #E2E8F0;font-size:10px;font-weight:700;letter-spacing:2px;color:#94A3B8">GUIDE DES FRÉQUENCES</div>
+      <div id="freq-guide" style="padding:0"></div>
+    </div>
+  </div>
+</div>
+
+<div id="tab-smoke" style="display:none">
+
+  <div style="background:linear-gradient(135deg,#1C1917,#292524);border-radius:12px;padding:18px;margin-bottom:14px;text-align:center;color:#fff">
+    <div style="font-size:32px;margin-bottom:6px">&#128683;</div>
+    <div style="font-size:16px;font-weight:800;margin-bottom:4px">Programme Stop Tabac</div>
+    <div style="font-size:11px;color:#A8A29E;line-height:1.5">Reduction progressive 7 semaines · Horaires imposes · Lien direct LMF</div>
+  </div>
+
+  <div style="background:#FEF2F2;border:1px solid #FECACA;border-radius:10px;padding:13px 14px;margin-bottom:14px">
+    <div style="font-size:10px;font-weight:700;letter-spacing:2px;color:#DC2626;margin-bottom:6px">&#129516; POURQUOI LE TABAC SABOTE TA LMF</div>
+    <div style="font-size:12px;color:#991B1B;line-height:1.7">
+      Tabac chronique → stress oxydatif → cortisol eleve → <strong>PDE activee en permanence</strong> → cAMP detruit → lipolyse bloquee dans tes lipomes.<br><br>
+      Vitamine C detruite 2x plus vite · Collagene 2x moins vite · VO2max -10-15% · CoQ10 epuise.<br><br>
+      <strong>Arreter = activer la meme voie que cafeine + berberine + resveratrol — 24h/24.</strong>
+    </div>
+  </div>
+
+  <div class="card">
+    <div style="padding:14px 16px;border-bottom:1px solid #E2E8F0;display:flex;justify-content:space-between;align-items:center">
+      <span style="font-size:10px;font-weight:700;letter-spacing:2px;color:#94A3B8">MON STATUT</span>
+      <button id="btn-sm-log" style="background:#1C1917;color:#fff;border:none;border-radius:8px;padding:6px 12px;font-size:11px;font-weight:700;cursor:pointer">+ Saisir</button>
+    </div>
+    <div class="card-body">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px">
+        <div style="background:#F8FAFC;border-radius:8px;padding:10px;text-align:center">
+          <div style="font-size:20px;font-weight:900;color:#1E293B" id="sm-today">-</div>
+          <div style="font-size:9px;font-weight:700;letter-spacing:1px;color:#94A3B8;margin-top:2px">AUJOURD'HUI</div>
+        </div>
+        <div style="background:#F8FAFC;border-radius:8px;padding:10px;text-align:center">
+          <div style="font-size:20px;font-weight:900;color:#22C55E" id="sm-streak">0</div>
+          <div style="font-size:9px;font-weight:700;letter-spacing:1px;color:#94A3B8;margin-top:2px">JOURS OK</div>
+        </div>
+        <div style="background:#F8FAFC;border-radius:8px;padding:10px;text-align:center">
+          <div style="font-size:20px;font-weight:900;color:#F59E0B" id="sm-saved">0</div>
+          <div style="font-size:9px;font-weight:700;letter-spacing:1px;color:#94A3B8;margin-top:2px">CHF ECONOMISES</div>
+        </div>
+      </div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:2px;color:#94A3B8;margin-bottom:8px">HORAIRES AUTORISES AUJOURD'HUI</div>
+      <div id="smoke-today-schedule"></div>
+    </div>
+  </div>
+
+  <div style="font-size:10px;font-weight:700;letter-spacing:2px;color:#94A3B8;margin-bottom:8px">PLAN 7 SEMAINES</div>
+  <div id="smoke-week-plan"></div>
+
+  <div id="smoke-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:300;align-items:center;justify-content:center;padding:16px">
+    <div style="background:#fff;border-radius:16px;padding:20px;width:100%;max-width:340px">
+      <div style="font-size:15px;font-weight:800;margin-bottom:12px">Clopes aujourd'hui</div>
+      <input type="number" id="sm-input" style="width:100%;border:2px solid #E2E8F0;border-radius:8px;padding:12px;font-size:24px;font-weight:700;text-align:center;margin-bottom:12px;font-family:monospace" placeholder="0" min="0" max="40">
+      <div style="display:flex;gap:8px">
+        <button id="sm-cancel" style="flex:1;background:#F1F5F9;border:none;border-radius:8px;padding:12px;font-size:13px;font-weight:700;color:#64748B;cursor:pointer">Annuler</button>
+        <button id="sm-save" style="flex:1;background:#DC2626;border:none;border-radius:8px;padding:12px;font-size:13px;font-weight:700;color:#fff;cursor:pointer">Enregistrer</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</div>
+<script>
+const PH=[{n:"Fondation",c:"#F97316",bg:"#FFF7ED"},{n:"Construction",c:"#EAB308",bg:"#FEFCE8"},{n:"Intensification",c:"#22C55E",bg:"#F0FDF4"},{n:"Performance",c:"#3B82F6",bg:"#EFF6FF"}];
+const LV=[{n:"🪖 Recrue",min:0,max:500,c:"#94A3B8"},{n:"⚔️ Guerrier",min:500,max:1500,c:"#F97316"},{n:"🏃 Athlète",min:1500,max:3000,c:"#8B5CF6"},{n:"🏆 Champion",min:3000,max:9999,c:"#EAB308"}];
+const BDGS=[{id:"first",icon:"🌅",n:"Premier lever",d:"1ère séance",xp:100},{id:"s3",icon:"🔥",n:"3 jours de feu",d:"3j consécutifs",xp:150},{id:"s7",icon:"🔥🔥",n:"Semaine parfaite",d:"7j de suite",xp:300},{id:"s14",icon:"💎",n:"Quinzaine de fer",d:"14j de suite",xp:500},{id:"dog",icon:"🐕",n:"Dog Hero",d:"28 sorties",xp:200},{id:"w2",icon:"⚔️",n:"Guerrier confirmé",d:"S2 complète",xp:250},{id:"pull",icon:"💪",n:"1ère traction",d:"S5+ traction libre",xp:400},{id:"champ",icon:"🏆",n:"Champion",d:"7 semaines",xp:1000}];
+const DS=["Lun","Mar","Mer","Jeu","Ven","Sam","Dim"];
+const DN=["Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi","Dimanche"];
+const MSGS=["6h00. Ton futur self te remerciera dans 7 semaines.","Le seul entraînement que tu regretteras c'est celui que tu n'as pas fait.","Chaque pompe, chaque km, chaque sortie chien — rien ne se perd.","Tu n'as pas besoin de motivation. Tu as besoin de discipline.","Les beaux jours arrivent fin avril. Commence ce que tu veux montrer alors.","Dans 20 minutes tu seras en train de transpirer et tu adoreras ça.","Ton chien t'attend. Tes enfants te regardent. Lance la séance.","Un mauvais entraînement vaut mieux que zéro. Toujours.","Ce matin tu décides qui tu seras dans 7 semaines. Décide bien.","La douleur des courbatures dure 2 jours. La fierté dure toute la vie.","Lundi. Tout le monde commence. Toi tu vas finir.","Ce soir à 20h tu seras fatigué. Fais-le quand même.","Vendredi max. Le week-end commence bientôt — mérite-le.","Dimanche. Repos total. Tu l'as gagné. Recharge à fond.","Ton corps a changé. La silhouette évolue chaque semaine."];
+const TIPS={"Pi":{m:"Pectoraux, triceps, épaules, core",p:"Mains sur bord de table, largeur épaules. Corps en ligne droite.",mv:"Descend 2 sec jusqu'à effleurer. Remonte 1 sec. Coudes à 45°.",e:"Fesses qui montent. Hanches qui s'affaissent.",r:"Inspire en descendant, expire en poussant."},"Pn":{m:"Pectoraux, triceps, épaules, core",p:"Mains largeur épaules. Corps rigide. Regard 30cm devant.",mv:"Descend à 3cm du sol. Remonte en explosant. Coudes à 45°.",e:"Ventre qui touche en premier. Fesses en l'air.",r:"Inspire en descendant, expire fort en montant."},"Pd":{m:"Triceps dominant, pectoraux internes",p:"Mains en diamant sous le sternum. Corps droit.",mv:"Descend lentement 3 sec. Qualité avant quantité.",e:"Sacrifier la forme. Pose un genou si nécessaire.",r:"Inspire en descendant, expire en montant."},"Dcjp":{m:"Triceps, épaules, pectoraux bas",p:"Bord de chaise stable. Fesses hors de la chaise. Jambes pliées 90°.",mv:"Coudes vers l'ARRIÈRE jusqu'à 90°. Remonte sans verrouiller.",e:"S'éloigner trop. Coudes qui s'ouvrent.",r:"Inspire en descendant, expire en remontant."},"Dcjt":{m:"Triceps, épaules — version difficile",p:"Comme jambes pliées MAIS jambes allongées, talons au sol.",mv:"Même mouvement. Si trop dur, reviens aux jambes pliées.",e:"Épaules qui montent vers les oreilles.",r:"Inspire en bas, expire en poussant."},"Dp":{m:"Triceps, pectoraux, épaules",p:"Entre deux chaises. Bras tendus, poids sur les paumes.",mv:"Descend à 90° de flexion. Ne pas aller plus bas.",e:"Corps qui se balance. Aller trop profond.",r:"Inspire en descendant, expire en montant."},"Tasp":{m:"Grand dorsal, biceps, rhomboïdes, core",p:"Prise en pronation, largeur épaules. Pied sur chaise ou bande. Bras tendus.",mv:"Tire les COUDES vers les hanches. Monte jusqu'au menton au-dessus de la barre.",e:"Tirer avec les bras en premier. C'est le DOS qui initie.",r:"Expire en montant, inspire en descendant lentement."},"Tbel":{m:"Grand dorsal, biceps, rhomboïdes",p:"Bande épaisse. Descend complètement avant chaque rep.",mv:"Corps immobile. Descend en 3 secondes.",e:"Utiliser l'élan. Chaque rep repart d'un plein étirement.",r:"Expire à la montée, inspire à la descente."},"Tbl":{m:"Grand dorsal + stabilisateurs",p:"Bande fine. Tu te rapproches des libres.",mv:"Contracte les omoplates vers le bas EN PREMIER.",e:"Sauter trop vite à la bande légère.",r:"Expire à la montée, inspire à la descente."},"Tl":{m:"Grand dorsal, biceps, tout le dos, core",p:"Prise largeur épaules. Corps droit. Bras complètement tendus.",mv:"Initie par les omoplates, PUIS tire les coudes vers les hanches. Descend en 3-4 sec.",e:"Kipping (balancement) = ne compte pas. Descente rapide = perds 50%.",r:"Expire en montant, inspire lentement en descendant."},"Sq":{m:"Quadriceps, fessiers, ischio-jambiers, core, mollets",p:"Pieds largeur épaules, orteils 15-30° vers l'ext. Bras tendus devant. Dos droit.",mv:"Descend comme si tu t'asseyais derrière toi. Genoux dans l'axe. Minimum 90°.",e:"Genoux qui rentrent vers l'intérieur. Ne pas descendre assez.",r:"Inspire en descendant, expire fort en remontant."},"Fa":{m:"Quadriceps, fessiers, ischio-jambiers, équilibre",p:"Debout, pieds joints. Regard droit devant.",mv:"Grand pas en avant. Genou ARRIÈRE effleure le sol. Genou AVANT ne dépasse pas les orteils.",e:"Pas trop court. Tronc qui penche.",r:"Inspire en descendant, expire en remontant."},"Pf":{m:"Fessiers (principal), ischio-jambiers, core",p:"Allongé sur le dos. Genoux pliés 90°, pieds à 30cm des fesses.",mv:"Pousse les hanches vers le plafond. Tiens 2 sec en SERRANT FORT les fessiers.",e:"Ne pas serrer les fesses = perd 60% d'efficacité.",r:"Expire en montant et serrant, inspire en redescendant."},"Pl":{m:"Core complet, épaules, fessiers, quadriceps",p:"Sur avant-bras (coudes sous épaules) et orteils. Corps en ligne tête-talons.",mv:"Statique. Ventre rentré, fesses serrées, pousse le sol avec les avant-bras.",e:"Fesses trop hautes. Hanches qui s'affaissent. Retenir sa respiration.",r:"Continue de respirer normalement pendant toute la tenue."},"Mc":{m:"Core, hip flexors, épaules, cardio",p:"Position de pompe haute. Mains sous les épaules. Corps rigide.",mv:"Ramène alternativement genou droit puis gauche vers la poitrine. Bas du dos NE BOUGE PAS.",e:"Dos qui monte et descend avec les jambes.",r:"Expire à chaque genou rentré."},"Hh":{m:"Transverse abdominal, rectus abdominis, psoas",p:"Allongé sur le dos. Épaules et jambes à 30-40cm du sol. Bas du dos COLLÉ au sol.",mv:"Statique. Si le dos se décolle, remonte les jambes. 20 sec propres > 40 sec dos décollé.",e:"Bas du dos qui décolle. Retenir sa respiration.",r:"Respire normalement malgré la tension — c'est le vrai exercice."},"Ssj":{m:"Quadriceps, fessiers, mollets, cardio explosif",p:"Pieds largeur épaules.",mv:"Descend en squat 90°, explose vers le haut. Atterris en DOUCEUR genoux fléchis.",e:"Atterrir jambes tendues = choc articulaire.",r:"Inspire en descendant, expire fort à la poussée."},"Fsj":{m:"Quadriceps, fessiers, cardio explosif",p:"Position de fente. Corps droit.",mv:"Descend en fente profonde, saute et change de jambe en l'air.",e:"Genoux verrouillés à l'atterrissage.",r:"Expire à chaque saut."},"Ls":{m:"Abdominaux, hip flexors, triceps, épaules",p:"Deux chaises stables face à face. Mains sur les bords.",mv:"Soulève le corps jambes pliées d'abord. Progressivement tente de tendre les jambes.",e:"Vouloir les jambes tendues trop tôt. Chaises qui glissent.",r:"Bloque 5 sec puis expire."},"FH":{m:"Tout le bas du corps + cardio",p:"Position stable sur la selle. Résistance augmentée pour les sprints.",mv:"Sprint : 110+ rpm pendant 30s. Récup : 60-70 rpm pendant 30s.",e:"Ne pas se lever de la selle. La récup est aussi importante que le sprint.",r:"Sprint : expire fort. Récup : inspire profondément."},"Ma":{m:"Épaules, hanches, chevilles, colonne",p:"Debout, pieds largeur épaules.",mv:"Cercles d'épaules 10 reps. Rotations de hanches 10 chaque sens. Chat/vache 10 lents.",e:"Aller trop vite. Chaque mouvement doit être lent.",r:"Naturelle. Expire sur chaque extension."},"FC":{m:"Cardio, tout le bas du corps, core",p:"Course naturelle. Épaules basses.",mv:"Phase rapide (1min) : augmente cadence. Phase récup (1min) : marche active.",e:"Sprinter à 100% = trop intense. Ne t'arrête pas complètement en récup.",r:"Phase rapide : expire fort. Récup : inspire profondément."}};
+const YT=q=>`https://www.youtube.com/results?search_query=${encodeURIComponent(q)}`;
+
+function gp(w){return w<=2?0:w<=4?1:w<=6?2:3}
+function gtr(w,d){
+  const p=gp(w);const r=b=>b+p*2;const h=b=>b+p*10;
+  const pT=["inclinées (table)","normales","normales + diamant","diamant"][p];
+  const pullT=["assistées (bande/pied sol)","bande élastique lourde","bande légère","libres 🎯"][p];
+  const dT=["chaise jambes pliées","chaise jambes tendues","chaise jambes tendues","parallèles"][p];
+  const pK=["Pi","Pn","Pn","Pd"][p];const pullK=["Tasp","Tbel","Tbl","Tl"][p];const dK=["Dcjp","Dcjt","Dcjt","Dp"][p];
+  const pD=["Pompes inclinées (table)","Pompes normales","Pompes normales + diamant","Pompes diamant"][p];
+  const pullD=["Tractions assistées (bande/pied sol)","Tractions bande élastique lourde","Tractions bande légère","Tractions libres 🎯"][p];
+  const dD=["Dips chaise jambes pliées","Dips chaise jambes tendues","Dips chaise jambes tendues","Dips parallèles"][p];
+  const pUrl=["pompes inclinées table débutant","pompes normales technique parfaite","pompes diamant technique","pompes diamant avancé"][p];
+  const pullUrl=["tractions assistées pied sol débutant","tractions élastique bande lourde dos","tractions bande élastique légère","tractions libres technique callisthénie"][p];
+  const dUrl=["dips chaise jambes pliées triceps","dips chaise jambes tendues triceps","dips chaise jambes tendues triceps","dips parallèles technique"][p];
+  const C=[
+    {tp:"HIIT Vélo",icon:"🚴",col:"#EF4444",tag:"CARDIO INTENSIF",slot:"6h15→7h10",rest:false,kcal:540+w*8,ex:[
+      {l:"Échauffement vélo",d:"10 min — 60% FCmax",ds:600,demo:YT("échauffement vélo home trainer")},
+      {l:"Fractionné HIIT",d:`${26+w*2} min — 30s sprint / 30s récup × ${13+w} séries`,hiit:{w:30,r:30,n:13+w},demo:YT("HIIT vélo home trainer fractionné"),tips:"FH"},
+      {l:"Endurance vélo",d:"10 min — 75% FCmax",ds:600,demo:YT("séance endurance home trainer")},
+      {l:"Étirements debout",d:"5 min — quadriceps, mollets, dos",ds:300,demo:YT("étirements après vélo debout")},
+    ]},
+    {tp:"Course + Cali haut",icon:"🐕",col:"#22C55E",tag:"CARDIO + FORCE",slot:"6h15→7h10",rest:false,kcal:510+w*6,ex:[
+      {l:"Marche activation",d:"5 min",ds:300,demo:YT("échauffement marche activation")},
+      {l:"Course avec le chien",d:"30 min — 65% FCmax",ds:1800,demo:YT("course endurance débutant")},
+      {l:`Pompes ${pT}`,d:`${3+Math.min(p,1)}×${r(8)} reps`,demo:YT(pUrl),tips:pK},
+      {l:`Dips ${dT}`,d:`3×${r(10)} reps`,demo:YT(dUrl),tips:dK},
+      {l:`Tractions ${pullT}`,d:`3×${r(5)} reps`,demo:YT(pullUrl),tips:pullK},
+      {l:"Étirements pecs/épaules",d:"5 min",ds:300,demo:YT("étirements pectoraux épaules")},
+    ]},
+    {tp:"Callisthénie complète",icon:"💪",col:"#8B5CF6",tag:"FORCE — SOIR",slot:"20h00→21h00",warn:"BNI 6h30 — séance soir",rest:false,kcal:400+w*5,ex:[
+      {l:"Mobilisation articulaire",d:"8 min",ds:480,demo:YT("mobilisation articulaire épaules hanches"),tips:"Ma"},
+      {l:`Pompes ${pT}`,d:`4×${r(8)} reps`,demo:YT(pUrl),tips:pK},
+      {l:`Dips ${dT}`,d:`${3+Math.min(p,1)}×${r(10)} reps`,demo:YT(dUrl),tips:dK},
+      {l:"Squats poids de corps",d:`4×${r(12)} reps`,demo:YT("squat poids de corps débutant"),tips:"Sq"},
+      {l:"Fentes alternées",d:`3×${r(10)} reps/jambe`,demo:YT("fentes alternées technique débutant"),tips:"Fa"},
+      {l:"Pont fessier",d:`3×${r(15)} reps`,demo:YT("pont fessier glute bridge débutant"),tips:"Pf"},
+      {l:"Planche",d:`3×${h(35)}s — corps rigide`,ds:h(35),demo:YT("planche abdominale gainage débutant"),tips:"Pl"},
+      {l:"Mountain climbers",d:`3×${r(15)} reps`,demo:YT("mountain climbers technique core"),tips:"Mc"},
+      {l:"Hollow hold",d:`3×${h(20)}s`,ds:h(20),demo:YT("hollow hold abdominaux débutant"),tips:"Hh"},
+    ]},
+    {tp:"Repos actif",icon:"💆",col:"#94A3B8",tag:"RÉCUPÉRATION",slot:"Journée",rest:true,kcal:0,ex:[
+      {l:"Marche avec le chien",d:"20 min — rythme lent",demo:YT("marche active récupération")},
+      {l:"Stretching global",d:"10 min",ds:600,demo:YT("stretching global corps récupération")},
+      {l:"Hydratation renforcée",d:"3L d'eau minimum"},
+      {l:"Coucher 22h impératif",d:"Jeudi = pic de récupération"},
+    ]},
+    {tp:"Fractionné + Core",icon:"⚡",col:"#EF4444",tag:"INTENSITÉ MAX",slot:"6h15→7h10",rest:false,kcal:560+w*8,ex:[
+      {l:"Échauffement course",d:"8 min",ds:480,demo:YT("échauffement course pied")},
+      {l:"Fractionné course",d:`${20+p*3} min — 1min rapide / 1min marche × ${10+p*2}`,hiit:{w:60,r:60,n:10+p*2},demo:YT("fractionné course pied débutant"),tips:"FC"},
+      {l:"Squats sautés",d:`${3+Math.min(p,1)}×${r(12)} reps`,demo:YT("squats sautés jump squat débutant"),tips:"Ssj"},
+      {l:"Fentes sautées",d:`3×${r(8)} reps/jambe`,demo:YT("fentes sautées jump lunges"),tips:"Fsj"},
+      {l:"Planche",d:`${3+Math.min(p,1)}×${h(35)}s`,ds:h(35),demo:YT("planche abdominale gainage débutant"),tips:"Pl"},
+      {l:"Hollow hold",d:`3×${h(20)}s`,ds:h(20),demo:YT("hollow hold abdominaux débutant"),tips:"Hh"},
+      {l:"L-sit chaise",d:`${2+p}×${10+p*5}s`,ds:10+p*5,demo:YT("L-sit chaise abdominaux callisthénie"),tips:"Ls"},
+      {l:"Retour au calme",d:"5 min",ds:300,demo:YT("retour au calme étirements course")},
+    ]},
+    {tp:"Vélo route + Cali",icon:"🌤",col:"#22C55E",tag:"PLAISIR + FORCE",slot:"Matin flexible",rest:false,kcal:490+w*6,ex:[
+      {l:"Vélo route extérieur",d:"40 min — profite du soleil 🌞",ds:2400,demo:YT("sortie vélo route endurance débutant")},
+      {l:`Pompes ${pT}`,d:`${1+p}×${r(8)} reps`,demo:YT(pUrl),tips:pK},
+      {l:`Dips ${dT}`,d:`${1+p}×${r(8)} reps`,demo:YT(dUrl),tips:dK},
+      {l:"Squats poids de corps",d:`${1+p}×${r(10)} reps`,demo:YT("squat poids de corps débutant"),tips:"Sq"},
+      {l:`Tractions ${pullT}`,d:`${1+p}×${r(4)} reps`,demo:YT(pullUrl),tips:pullK},
+      {l:"Planche",d:`${1+p}×${h(30)}s`,ds:h(30),demo:YT("planche gainage débutant"),tips:"Pl"},
+      {l:"Cool down",d:"5 min",ds:300,demo:YT("cool down étirements sport")},
+    ]},
+    {tp:"Repos total",icon:"😴",col:"#CBD5E1",tag:"REPOS",slot:"Toute la journée",rest:true,kcal:0,ex:[
+      {l:"Zéro entraînement",d:"Le corps DOIT se réparer"},
+      {l:"Cheat meal",d:"Autorisé à midi — relance le métabolisme"},
+      {l:"Sommeil 8h",d:"Coucher 22h → lever 6h"},
+      {l:"Bilan semaine",d:"Note tes progrès, prépare la suite"},
+    ]},
+  ];
+  return C[d];
+}
+const BF=[
+{n:"Avoine LMF Protocol",items:["Flocons avoine + lait + 1 c.s. chia","Myrtilles + framboises","1 c.c. cannelle + 2 oeufs","Cafe noir ou the vert matcha"],k:560,lmf:"Cannelle+Chia+Myrtilles PPARy-"},
+{n:"Bowl anti-inflammatoire",items:["Flocons avoine + lait","1 c.s. lin moulu + noix","Fruits rouges + pomme avec peau","Curcuma + poivre + 2 oeufs durs","The vert"],k:530,lmf:"Lin+Curcuma+Quercetine PPARy inhibe"},
+{n:"Yaourt grec & superfruits",items:["Grand bol yaourt grec","Chia + noix (30g)","Myrtilles + grenade","The vert matcha"],k:490,lmf:"Chia+Myrtilles+Grenade ellagique+cAMP"},
+{n:"Smoothie vert proteine",items:["Epinards (30g) + lait + banane","Myrtilles congelees","1 c.s. lin moulu","Whey 1 dose + gingembre rape"],k:520,lmf:"Epinards+Lin+Gingembre anti-adipogenique"},
+{n:"Fromage blanc & graines",items:["Fromage blanc 0%","Chia + lin moulu","Framboises + kiwi","Cannelle + 2 oeufs durs ail-persil"],k:500,lmf:"Chia+Framboises+Cannelle ellagique actif"},
+{n:"Pancakes avoine LMF",items:["Flocons avoine + 2 oeufs + lait","1 c.s. lin moulu dans la pate","Myrtilles + cannelle","The vert ou cafe"],k:530,lmf:"Lin+Myrtilles+Cannelle dans la pate"},
+{n:"Brunch sain & ail",items:["2 tranches pain complet","Avocat + 1 gousse ail cru ecrase","2 oeufs au plat","Tomates cerise + capres (rutine 83%)","The vert"],k:540,lmf:"Ail+Capres+Avocat allicine+rutine 83%"}
+];
+
+const DIN=[
+{n:"Poulet curcuma & cruciferes",items:["Cuisses poulet (2-4) sans peau","Brocoli + courgettes + oignon rouge","Marinade: 3 gousses ail + curcuma + poivre + huile olive","Herbes Provence + piment Cayenne"],t:"35 min 200deg",tip:"Toi: demi-portion feculent",k:620,lmf:"Ail+Brocoli+Curcuma+Oignon rouge sulforaphane+allicine+PPARy-"},
+{n:"Bolognaise anti-LMF",items:["Pates completes (demi-portion toi)","400g boeuf hache 5%","Sauce tomate + 4 gousses ail + oignon rouge","Origan + piment Cayenne + capres"],t:"25 min",tip:"Capres et piment en fin de cuisson",k:650,lmf:"Ail+Oignon rouge+Capres+Piment cAMP+rutine 83%"},
+{n:"Saumon gingembre & quinoa",items:["Pavés saumon (EPA+DHA)","Quinoa + epinards sautes ail","Gingembre frais + soja + citron + curcuma","Brocoli vapeur + capres"],t:"20 min",tip:"Toi: portion quinoa reduite",k:600,lmf:"Saumon EPA/DHA + Gingembre + Brocoli lipolyse max"},
+{n:"Jeudi plaisir (LMF-friendly)",items:["Repas libre en famille","Suggestion: pizza maison pate fine","Ajouter roquette + ail cru + capres"],t:"—",cheat:true,k:700,lmf:"Meme en plaisir: ail+capres = rutine actif"},
+{n:"Omelette provencale & salade ail",items:["6 oeufs + poivrons + tomates + herbes","2 gousses ail dans omelette","Salade: huile olive + citron + capres + oignons rouges","Persil frais hache (apigenine)"],t:"15 min",k:520,lmf:"Ail+Capres+Oignon rouge+Persil apigenine+rutine"},
+{n:"Cabillaud & cruciferes",items:["Filets cabillaud","Chou-fleur roti ail + brocoli vapeur","Sauce: citron + persil + capres","Puree celeri-rave"],t:"25 min",k:560,lmf:"Brocoli+Chou-fleur+Persil+Capres sulforaphane+apigenine"},
+{n:"Dimanche sardines & salade",items:["Sardines fraiches ou en boite (EPA+DHA)","Salade tomates + oignon rouge + capres","Vinaigrette huile lin + citron","Pain complet"],t:"—",cheat:true,k:580,lmf:"Sardines EPA/DHA + Oignon rouge + Capres"}
+];
+
+const SHOP={
+"Viandes & Poissons":["Cuisses de poulet (1.5 kg) sans peau","Blancs de poulet (500g)","Boeuf hache 5% (400g)","Filets cabillaud (4)","Pavés saumon (4+1 midi) EPA+DHA","Sardines en boite x3 EPA+DHA","Thon en eau (2 boites)"],
+"Legumes cruciferes & anti-LMF":["Brocoli (2 tetes) sulforaphane","Chou-fleur (1) sulforaphane","Epinards frais (2 sachets)","Kale / chou kale (1 sachet)","Courgettes (4)","Poivrons varies (4)","Oignons ROUGES (4) quercetine+rutine","Tomates (6)","Tomates concassees (2 boites)","Haricots verts (500g)","Celeri branche (1 botte)","Persil frais (1 botte) apigenine","Pommes de terre (1 kg)"],
+"Alliacees & epices LMF":["Ail (3 tetes) allicine+AMPK","Gingembre frais (gros morceau)","Curcuma poudre (1 pot) PPARy-","Poivre noir moulin pipérine","Cannelle (1 pot) cinnamaldéhyde","Piment de Cayenne capsaicine+cAMP+","Capres en bocal (2) rutine 83%","Cumin"],
+"Feculents":["Riz complet (1 kg)","Pates completes (500g)","Quinoa (500g)","Flocons avoine (1 kg)","Pain complet"],
+"Laitages":["Yaourt grec (x6)","Skyr 200g (x4)","Fromage blanc 0% (1 kg)","Lait demi-ecreme (2 L)"],
+"Fruits anti-LMF":["Myrtilles fraiches/surgelees (500g) rutine+quercetine","Framboises (250g) ellagique","Grenades (2) ou jus grenade ellagique","Pommes (1 kg avec peau) quercetine","Oranges (4) hesperidine","Citrons (4)","Kiwis (4)","Bananes (4)"],
+"Graines & huiles anti-LMF":["Graines de chia (250g) omega-3 ALA","Graines de lin moulu (250g) omega-3 ALA","Noix (200g) omega-3 ALA","Huile olive extra vierge","Huile de lin (petite bouteille) ALA pur"],
+"Epicerie":["Sauce soja","Miel","The vert matcha EGCG+cafeine","Vinaigre de cidre pomme non filtre","Herbes de Provence","Origan"]
+};
+
+const SUPPS=[
+{n:"Whey Native Isolate",icon:"🥤",pr:"ESSENTIEL · S1",c:"#EF4444",t:"Post-workout — 30 min après la séance",d:"1 dose (25-30g) dans 200ml lait ou eau",w:"Récupération musculaire immédiate. Sans ça, tu perds du muscle en même temps que de la graisse. Whey native = meilleur profil BCAA, zéro dénaturation.",b:"Nutripure Whey Native Isolate Bio — nutripure.fr",p:"~55 CHF/mois",lmf:"Protège la masse maigre pendant le déficit"},
+{n:"Créatine Creapure®",icon:"⚡",pr:"ESSENTIEL · S1",c:"#F97316",t:"Matin avec un verre d'eau — régularité > timing",d:"5g dans un verre d'eau (1 cuillère rase)",w:"Force +5-15% en quelques semaines. Améliore directement pompes, dips et tractions. Rétention eau intramusculaire légère (1-2 kg) les 2 premières semaines — normal.",b:"Nutri&Co Créatine Creapure® — nutriandco.com",p:"~20 CHF/mois",lmf:"Pureté 99,95% Creapure® — zéro contaminants"},
+{n:"Vitamine D3 + K2",icon:"☀️",pr:"ESSENTIEL · S1",c:"#EAB308",t:"Matin avec le petit-déjeuner (repas gras)",d:"2000-3000 UI D3 + 100µg K2 MK-7",w:"Déficit quasi-systématique en Suisse hivernale. Impact direct testostérone + récupération. K2 dirige le calcium vers les os et non les artères.",b:"Nutripure D3+K2 — nutripure.fr",p:"~22 CHF/mois",lmf:"Déficit D3 = cortisol élevé = PDE activée = lipolyse bloquée"},
+{n:"Magnésium Bisglycinate",icon:"😴",pr:"ESSENTIEL · S1",c:"#8B5CF6",t:"Soir — au dîner ou 1h avant de dormir",d:"300-400mg élémentaire (forme Albion® TRAACS)",w:"Sommeil profond = récupération maximale + cortisol nocturne réduit. Prévient les crampes. Forme bisglycinate = 60-80% biodisponibilité vs 4% pour l'oxyde.",b:"Nutripure Magnésium Bisglycinate Albion® — nutripure.fr",p:"~22 CHF/mois",lmf:"Magnésium↑ = cortisol↓ = cAMP préservé = lipolyse active"},
+{n:"Ashwagandha",icon:"🌿",pr:"ESSENTIEL · S1",c:"#16A34A",t:"Soir — avec le dîner",d:"1-2 gélules selon dosage",w:"Tu l'as déjà chez toi. Réducteur de cortisol #1 (KSM-66 idéalement). À 39 ans sous stress professionnel + déficit calorique, c'est le levier hormonal le plus direct.",b:"Exelis Swiss Food Solutions — déjà dans ton stock",p:"Déjà là ✅",lmf:"Ashwagandha → cortisol↓ 20-30% → PDE↓ → cAMP↑ → lipolyse"},
+{n:"Collagène + Vitamine C",icon:"🦴",pr:"ESSENTIEL · S1",c:"#0EA5E9",t:"Réveil immédiat — 30-40 min AVANT la séance",d:"10g collagène + jus citron frais (vit C) à jeun",w:"Pour toi fumeur passant de 0 à tractions en 7 semaines : les tendons lâchent avant les muscles. Collagène + vit C avant séance = synthèse collagène dans tendons PENDANT l'effort. Timing critique.",b:"Nutripure Collagène Hydrolysé — nutripure.fr",p:"~20 CHF/mois",lmf:"Tabac détruit collagène 2x plus vite — compensation obligatoire"},
+{n:"NAC 600mg",icon:"🫁",pr:"ESSENTIEL · S1 — Fumeur",c:"#EF4444",t:"Matin avec le petit-déjeuner",d:"600mg N-acétylcystéine",w:"Protection pulmonaire directe pour fumeur. Précurseur du glutathion (antioxydant majeur). Réduit le stress oxydatif induit par le tabac sur les tissus adipeux.",b:"Nutripure ou pharmacie Sion",p:"~20 CHF/mois",lmf:"Tabac = stress oxydatif sur adipocytes lipomateux = NAC protège"},
+{n:"Vitamine C 500mg",icon:"🍋",pr:"ESSENTIEL · S1 — Fumeur",c:"#F59E0B",t:"Matin + pré-séance (avec collagène)",d:"500mg le matin + 500mg avant séance avec collagène",w:"Un fumeur consomme 2x plus de vitamine C qu'un non-fumeur. Sans vitamine C le collagène que tu prends ne s'active pas. Double dose obligatoire.",b:"Pharmacie Sion — 3 CHF la boite",p:"~5 CHF/mois",lmf:"Vit C active collagène + réduit stress oxydatif sur lipomes"},
+{n:"Oméga-3 EPAX®",icon:"🐟",pr:"IMPORTANT · S3",c:"#3B82F6",t:"Repas du midi",d:"2 capsules = 1200mg EPA + 900mg DHA/jour",w:"Anti-inflammatoire puissant. Réduit les douleurs musculaires (DOMS). Améliore le métabolisme lipidique. EPAX® = certification Friend of the Sea, sans métaux lourds.",b:"Onatera Oméga-3 Premium EPAX® — onatera.com",p:"~30 CHF/mois",lmf:"DHA inhibe adipogenèse + réduit PPARγ = freine création nouveaux lipomes"},
+{n:"Zinc Bisglycinate",icon:"💪",pr:"IMPORTANT · S1",c:"#22C55E",t:"Soir — avec le dîner",d:"15mg élémentaire — forme bisglycinate uniquement",w:"Tu transpires à 6h15 tous les matins. Le zinc part avec la sueur. C'est le minéral #1 de la testostérone et de la récupération. À 39 ans en déficit, quasi systématiquement bas.",b:"Inclure dans commande Nutripure",p:"~12 CHF/mois",lmf:"Zinc↑ = testostérone↑ = métabolisme lipidique actif"},
+{n:"Curcumine + Pipérine",icon:"🟡",pr:"IMPORTANT · S1",c:"#F59E0B",t:"Dîner — avec un repas gras (liposoluble)",d:"500mg curcumine + 5mg pipérine minimum",w:"Anti-inflammatoire aussi puissant que certains AINS. Inhibe PPARγ. Sans pipérine (poivre noir) la curcumine n'est quasiment pas absorbée.",b:"Nutri&Co ou pharmacie — ou dans les repas quotidiens",p:"~18 CHF/mois",lmf:"Curcumine inhibe PPARγ → freine différenciation adipocytes lipomateux"},
+{n:"Resvératrol",icon:"🍇",pr:"PROTOCOLE LMF · S7",c:"#7C3AED",t:"Dîner — avec repas gras (liposoluble)",d:"500mg trans-resvératrol/jour",w:"Inhibiteur de PPARγ et de la voie HMGA2 — le gène impliqué dans la LMF. Freine la création de nouveaux adipocytes lipomateux. Actif tout au long du processus de différenciation.",b:"Nutri&Co Resvératrol ou Onatera — nutri&co.com",p:"~20 CHF/mois",lmf:"Resvératrol inhibe PPARγ/HMGA2 — cible moléculaire directe LMF"},
+{n:"Berbérine 500mg",icon:"🟤",pr:"PROTOCOLE LMF · S11 ⚠️",c:"#92400E",t:"Midi + dîner — aux repas OBLIGATOIRE",d:"500mg x2/jour — jamais à jeun",w:"Active AMPK → antagoniste des PDE → cAMP↑ → lipolyse. Même voie que la caféine mais prolongée. Interactions médicamenteuses possibles. VALIDER AVEC TON MÉDECIN avant de commencer.",b:"Nutri&Co Berbérine ou pharmacie",p:"~25 CHF/mois",lmf:"⚠️ Valider médecin — AMPK activée = PDE inhibée = cAMP↑ = lipolyse dans lipomes"},
+{n:"CoQ10 100mg",icon:"⚡",pr:"FUMEUR · S2",c:"#EF4444",t:"Petit-déjeuner avec repas gras",d:"100mg Ubiquinol (forme réduite, meilleure absorption)",w:"Le tabac épuise en continu le CoQ10. Énergie cellulaire mitochondriale. Les mitochondries défectueuses dans les adipocytes lipomateux = lien direct avec la LMF.",b:"Nutri&Co CoQ10 ou pharmacie Sion",p:"~25 CHF/mois",lmf:"Mitochondries lipomateuses dysfonctionnelles — CoQ10 soutient OXPHOS"},
+{n:"Probiotiques multi-souches",icon:"🦠",pr:"IMPORTANT · S1",c:"#22C55E",t:"Matin à jeun — 15 min avant petit-déj",d:"Min 10 milliards CFU — Lactobacillus acidophilus + Bifidobacterium",w:"En déficit calorique avec whey quotidienne, la flore intestinale prend un coup. Améliore l'absorption des protéines. Réduit ballonnements. Renforce immunité.",b:"Lactibiane Référence (pharmacie) ou Nutripure Probiotiques",p:"~25 CHF/mois",lmf:"Microbiote sain = inflammation systémique réduite = PDE moins activée"}
+];
+
+// STATE
+const SK='jfit_v5';
+const PS=new Date("2026-03-23");
+let S={wk:1,dy:0,xp:0,str:0,chk:{},exp:{},bdg:[],la:null,alarm:false};
+let AT={};
+
+function save(){try{localStorage.setItem(SK,JSON.stringify({xp:S.xp,str:S.str,chk:S.chk,bdg:S.bdg,la:S.la,alarm:S.alarm}));}catch(e){}}
+function load(){try{const d=JSON.parse(localStorage.getItem(SK)||'{}');S.xp=d.xp||0;S.str=d.str||0;S.chk=d.chk||{};S.bdg=d.bdg||[];S.la=d.la||null;S.alarm=d.alarm||false;}catch(e){}}
+function initDay(){
+  const diff=Math.floor((new Date()-PS)/86400000),d=Math.max(0,diff);
+  S.wk=Math.min(7,Math.floor(d/7)+1);S.dy=Math.min(6,d%7);
+  const today=new Date().toDateString();
+  if(S.la&&S.la!==today){const y=new Date();y.setDate(y.getDate()-1);if(S.la!==y.toDateString()){S.str=0;save();}}
+}
+function glv(){return LV.find((l,i)=>S.xp>=l.min&&(S.xp<l.max||i===LV.length-1))||LV[0]}
+function glp(){const l=glv();return Math.min(100,Math.round(((S.xp-l.min)/(l.max-l.min))*100))}
+function xpearn(n){S.xp=Math.max(0,S.xp+n);save();uph();mxp()}
+function ubdg(id){
+  if(S.bdg.includes(id))return;const b=BDGS.find(x=>x.id===id);if(!b)return;
+  S.bdg.push(id);xpearn(b.xp);save();
+  const t=document.getElementById('bt');
+  document.getElementById('bticon').textContent=b.icon;document.getElementById('btname').textContent=b.n;document.getElementById('btxp').textContent=`+${b.xp} XP`;
+  t.style.border=`2px solid ${PH[gp(S.wk)].c}`;t.style.display='block';setTimeout(()=>t.style.display='none',4000);
+  if(document.getElementById('tab-prog').style.display!=='none')rbdg();
+}
+
+// AUDIO
+function beep(f=880,dur=0.2,v=0.3){try{const c=new(window.AudioContext||window.webkitAudioContext)();const o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=f;o.start();g.gain.setValueAtTime(v,c.currentTime);g.gain.exponentialRampToValueAtTime(0.001,c.currentTime+dur);o.stop(c.currentTime+dur);}catch(e){}}
+function pfin(){[0,.4,.8].forEach(t=>setTimeout(()=>beep(880,.3),t*1000))}
+function palarm(){let i=0;const iv=setInterval(()=>{beep(880+i*80,.5);if(++i>5)clearInterval(iv);},600)}
+
+// TIMERS
+function stimer(k,ds,col){
+  if(AT[k]){clearInterval(AT[k].iv);delete AT[k];rtr();return;}
+  AT[k]={rem:ds,type:'cd',col};
+  AT[k].iv=setInterval(()=>{AT[k].rem--;if(AT[k].rem<=0){clearInterval(AT[k].iv);delete AT[k];pfin();if(!S.chk[k]){S.chk[k]=true;xpearn(50);csbdg();}save();}rtii(k);if(AT[k]&&AT[k].rem===10)beep(660,.15);},1000);
+  rtr();
+}
+function shiit(k,w,r,n,col){
+  if(AT[k]){clearInterval(AT[k].iv);delete AT[k];rtr();return;}
+  AT[k]={ph:'w',rem:w,w,r,rnd:1,n,type:'h',col};
+  AT[k].iv=setInterval(()=>{
+    const t=AT[k];t.rem--;
+    if(t.rem<=0){if(t.ph==='w'){t.ph='r';t.rem=t.r;beep(660,.2);}else{t.rnd++;if(t.rnd>t.n){clearInterval(t.iv);delete AT[k];pfin();if(!S.chk[k]){S.chk[k]=true;xpearn(50);}save();rtr();return;}t.ph='w';t.rem=t.w;beep(880,.2);}}
+    rtii(k);
+  },1000);
+  rtr();
+}
+function rtii(k){const el=document.getElementById('ti-'+k);if(!el)return;const t=AT[k];if(!t){el.innerHTML='';return;}el.innerHTML=tihtml(k);}
+function tihtml(k){
+  const t=AT[k];if(!t)return'';
+  const m=Math.floor(t.rem/60),s=t.rem%60,ts=`${m>0?m+'m ':''}${s.toString().padStart(2,'0')}s`;
+  if(t.type==='h'){const iw=t.ph==='w',tot=iw?t.w:t.r,pct=Math.round((t.rem/tot)*100);return`<div style="margin:4px 0 8px"><span class="tdisp ${iw?'hw':'hr'}">${iw?'🔥 SPRINT':'😮‍💨 RÉCUP'} ${ts}</span><div style="font-size:10px;color:#94A3B8;margin-top:2px">Série ${t.rnd}/${t.n}</div><div style="background:#F1F5F9;border-radius:3px;height:4px;margin-top:4px"><div style="width:${pct}%;height:4px;border-radius:3px;background:${iw?'#EF4444':'#22C55E'};transition:width .5s"></div></div></div>`;}
+  return`<div style="margin:4px 0 8px"><span class="tdisp${t.rem<=10?' warn':''}" style="border-color:#86EFAC;color:#166534">⏱ ${ts}</span></div>`;
+}
+
+// NOTIFICATIONS
+function askNotif(){
+  if(!('Notification' in window)){alert('Notifications non supportées sur ce navigateur.');return;}
+  Notification.requestPermission().then(p=>{if(p==='granted'){S.alarm=true;save();schedAlarm();document.getElementById('nbar').style.display='none';new Notification('✅ Réveil 6h00 activé !',{body:'Tu recevras une notification chaque matin.'});}});
+}
+function schedAlarm(){
+  if(window._ato)clearTimeout(window._ato);
+  const now=new Date(),nxt=new Date();nxt.setHours(6,0,0,0);if(now>=nxt)nxt.setDate(nxt.getDate()+1);
+  window._ato=setTimeout(()=>{trigAlarm();setTimeout(schedAlarm,60000);},nxt-now);
+}
+function trigAlarm(){
+  palarm();
+  const msg=MSGS[(S.wk*7+S.dy)%MSGS.length];
+  document.getElementById('almsg').textContent=`"${msg}"`;
+  document.getElementById('alarm').classList.add('open');
+  if(Notification.permission==='granted'){try{new Notification('⏰ Jeremy — 6h00 !',{body:msg,requireInteraction:true});}catch(e){}}
+}
+function dismissAlarm(){document.getElementById('alarm').classList.remove('open');closeMorning();document.getElementById('morning').classList.remove('hidden');renderMorning();}
+function snooze(){document.getElementById('alarm').classList.remove('open');if(window._snto)clearTimeout(window._snto);window._snto=setTimeout(trigAlarm,9*60*1000);}
+
+// ICS EXPORT
+function pad2(n){return String(n).padStart(2,'0')}
+function icsdt(date,h,m){return`${date.getFullYear()}${pad2(date.getMonth()+1)}${pad2(date.getDate())}T${pad2(h)}${pad2(m)}00`}
+function dlICS(){
+  const ls=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Jeremy Fitness//Gencie//FR','CALSCALE:GREGORIAN'];
+  const st=new Date('2026-03-23');
+  for(let w=1;w<=7;w++){for(let d=0;d<7;d++){const tr=gtr(w,d),dt=new Date(st);dt.setDate(dt.getDate()+(w-1)*7+d);const sh=d===2?20:6,sm=d===2?0:15,eh=d===2?21:7,em=d===2?0:15;ls.push('BEGIN:VEVENT',`UID:jfit-s${w}d${d}@gencie.com`,`DTSTART:${icsdt(dt,sh,sm)}`,`DTEND:${icsdt(dt,eh,em)}`,`SUMMARY:${tr.icon} ${tr.tp} — S${w} ${DS[d]}`,`DESCRIPTION:${tr.ex.map(e=>e.l).join(' | ')}`,`STATUS:CONFIRMED`,'END:VEVENT');}}
+  ls.push('END:VCALENDAR');
+  dl(ls.join('\r\n'),'jeremy-fitness-7semaines.ics','text/calendar');
+}
+function dlTCX(){
+  const tr=gtr(S.wk,S.dy);
+  const steps=tr.ex.map((ex,i)=>{const s=ex.ds||(ex.hiit?(ex.hiit.w+ex.hiit.r)*ex.hiit.n:300);return`    <Step xsi:type="Step_t"><StepId>${i+1}</StepId><n>${ex.l.replace(/[<>&]/g,'')}</n><Duration xsi:type="Time_t"><Seconds>${s}</Seconds></Duration><Intensity>Active</Intensity><Target xsi:type="None_t"/></Step>`;}).join('\n');
+  dl(`<?xml version="1.0" encoding="UTF-8"?>\n<TrainingCenterDatabase xmlns="http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\n  <Workouts><Workout Sport="Other"><n>${tr.tp} S${S.wk} ${DN[S.dy]}</n>\n${steps}\n  </Workout></Workouts>\n</TrainingCenterDatabase>`,`jeremy-s${S.wk}-${DS[S.dy].toLowerCase()}.tcx`,'application/xml');
+}
+function dl(c,fn,t){const b=new Blob([c],{type:t}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=fn;document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(u);}
+
+// SVG BODY
+function bsvg(phase,sz=100){
+  const bW=[38,28,20,12][phase],bO=[.55,.38,.22,.08][phase],mO=[.1,.3,.55,.85][phase],aO=[0,.15,.45,.8][phase],c=PH[phase].c;
+  const abs=[0,1,2].map(row=>[0,1].map(col=>`<rect x="${51+col*14}" y="${88+row*11}" width="10" height="8" rx="3" fill="none" stroke="${c}" stroke-width="1.2" opacity="${aO}"/>`).join('')).join('');
+  return`<svg viewBox="0 0 120 280" width="${sz}" style="filter:drop-shadow(0 0 10px ${c}44)"><defs><linearGradient id="bg${phase}x" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#1E293B"/><stop offset="100%" stop-color="#334155"/></linearGradient></defs><ellipse cx="60" cy="28" rx="18" ry="22" fill="url(#bg${phase}x)" stroke="${c}" stroke-width="1.5"/><rect x="53" y="47" width="14" height="14" rx="4" fill="url(#bg${phase}x)"/><ellipse cx="28" cy="75" rx="16" ry="10" fill="url(#bg${phase}x)" stroke="${c}" stroke-width="${mO>.3?1.5:.5}" stroke-opacity="${mO}"/><ellipse cx="92" cy="75" rx="16" ry="10" fill="url(#bg${phase}x)" stroke="${c}" stroke-width="${mO>.3?1.5:.5}" stroke-opacity="${mO}"/><path d="M38,62 Q60,58 82,62 L88,${120+bW*.3} Q60,${125+bW*.5} 32,${120+bW*.3} Z" fill="url(#bg${phase}x)" stroke="${c}" stroke-width="1.5"/><ellipse cx="60" cy="${105+bW*.3}" rx="${bW}" ry="${bW*.7}" fill="${c}" opacity="${bO}"/><ellipse cx="47" cy="75" rx="13" ry="9" fill="none" stroke="${c}" stroke-width="1" opacity="${mO}"/><ellipse cx="73" cy="75" rx="13" ry="9" fill="none" stroke="${c}" stroke-width="1" opacity="${mO}"/>${abs}<path d="M28,68 Q18,90 22,120 Q26,135 30,120 Q32,95 42,72" fill="url(#bg${phase}x)" stroke="${c}" stroke-width="1.2"/><path d="M92,68 Q102,90 98,120 Q94,135 90,120 Q88,95 78,72" fill="url(#bg${phase}x)" stroke="${c}" stroke-width="1.2"/><path d="M32,${120+bW*.3} Q60,${130+bW*.4} 88,${120+bW*.3} L85,148 Q60,152 35,148 Z" fill="url(#bg${phase}x)" stroke="${c}" stroke-width="1"/><path d="M35,148 Q30,190 32,230 Q38,245 44,230 Q46,190 50,148" fill="url(#bg${phase}x)" stroke="${c}" stroke-width="1.2"/><path d="M85,148 Q90,190 88,230 Q82,245 76,230 Q74,190 70,148" fill="url(#bg${phase}x)" stroke="${c}" stroke-width="1.2"/><text x="60" y="270" text-anchor="middle" font-size="8" fill="${c}" font-weight="bold" opacity=".8">${["S1-S2","S3-S4","S5-S6","S7"][phase]}</text></svg>`;
+}
+
+// HEADER
+function uph(){
+  const l=glv(),pct=glp(),ph=PH[gp(S.wk)];
+  document.getElementById('strh').textContent=S.str;
+  document.getElementById('lvh').textContent=`Jeremy · ${l.n}`;
+  document.getElementById('lvs').textContent=l.n;
+  document.getElementById('xps').textContent=`${S.xp} XP`;
+  const b=document.getElementById('xbh');b.style.width=pct+'%';b.style.background=l.c;
+  const ch=document.getElementById('pchip');ch.textContent=`S${S.wk} ${ph.n}`;ch.style.background=ph.bg;ch.style.color=ph.c;ch.style.borderColor=ph.c+'44';
+}
+function mxp(){const l=glv(),pct=glp();document.getElementById('lvlm').textContent=l.n;document.getElementById('xpm').textContent=`${S.xp} XP`;const b=document.getElementById('xbm');b.style.width=pct+'%';b.style.background=l.c;}
+function renderMorning(){
+  const ph=PH[gp(S.wk)];
+  document.getElementById('mmsg').textContent=`"${MSGS[(S.wk*7+S.dy)%MSGS.length]}"`;
+  const mp=document.getElementById('mphase');mp.textContent=`SEMAINE ${S.wk} — ${ph.n.toUpperCase()}`;mp.style.background=`${ph.c}22`;mp.style.color=ph.c;mp.style.border=`1px solid ${ph.c}66`;
+  document.getElementById('mbody').innerHTML=bsvg(gp(S.wk),110);
+  document.getElementById('sbig').textContent=S.str;
+  mxp();
+}
+function closeMorning(){document.getElementById('morning').classList.add('hidden');}
+
+// WEEK/DAY CHIPS
+function rwk(){
+  const w=document.getElementById('wchips');w.innerHTML='';
+  for(let i=1;i<=7;i++){const ph=PH[gp(i)],b=document.createElement('button');b.className='chip';b.textContent=`S${i}`;b.style.background=S.wk===i?ph.c:'#F1F5F9';b.style.color=S.wk===i?'#fff':'#64748B';b.onclick=()=>{S.wk=i;ra()};w.appendChild(b);}
+}
+function rdk(){
+  const tr=gtr(S.wk,S.dy),w=document.getElementById('dchips');w.innerHTML='';
+  DS.forEach((d,i)=>{const b=document.createElement('button');b.className='chip';b.textContent=d;b.style.background=S.dy===i?tr.col:'#F1F5F9';b.style.color=S.dy===i?'#fff':'#64748B';b.onclick=()=>{S.dy=i;Object.keys(AT).forEach(k=>{clearInterval(AT[k].iv);delete AT[k]});ra()};w.appendChild(b);});
+}
+
+// WALKS
+function rwalk(){
+  const g=document.getElementById('wgrid');g.innerHTML='';let done=0;
+  ["Matin","Midi","Aprem","Soir"].forEach((l,n)=>{
+    const k=`wk${S.wk}dy${S.dy}wl${n}`,ck=!!S.chk[k];if(ck)done++;
+    const t=document.createElement('div');t.className='wt'+(ck?' done':'');
+    t.innerHTML=`<div style="font-size:18px">${ck?'✅':'🐕'}</div><div style="font-size:10px;font-weight:600;color:${ck?'#16A34A':'#94A3B8'};margin-top:4px">${l}</div><div style="font-size:10px;color:#CBD5E1">~100 kcal</div>`;
+    t.onclick=()=>{S.chk[k]=!S.chk[k];const tot=Object.keys(S.chk).filter(k=>k.includes('wl')&&S.chk[k]).length;if(tot>=28)ubdg('dog');save();rwalk();};
+    g.appendChild(t);
+  });
+  document.getElementById('wct').textContent=`${done}/4`;
+}
+
+// TRAINING
+function rtr(){
+  const tr=gtr(S.wk,S.dy);
+  document.getElementById('tcard').style.borderLeft=`4px solid ${tr.col}`;
+  const tags=document.getElementById('ttags');tags.innerHTML='';
+  [tr.tag,tr.warn].filter(Boolean).forEach(t=>{const s=document.createElement('span');s.className='pill';if(t===tr.warn){s.style.background='#F3E8FF';s.style.color='#8B5CF6';}else{s.style.background=`${tr.col}18`;s.style.color=tr.col;}s.textContent=t===tr.warn?`⚠️ ${t}`:t;tags.appendChild(s);});
+  document.getElementById('ttit').textContent=`${tr.icon} ${tr.tp}`;
+  document.getElementById('tslot').textContent=`🕐 ${tr.slot}${tr.kcal>0?` · ~${tr.kcal} kcal · +${tr.ex.length*50+200} XP`:''}`;
+  const done=tr.ex.filter((_,i)=>S.chk[`s${S.wk}d${S.dy}e${i}`]).length;
+  const pct=tr.ex.length>0?Math.round((done/tr.ex.length)*100):0;
+  const rf=document.getElementById('rfg');rf.style.stroke=tr.col;const c=2*Math.PI*22;rf.setAttribute('stroke-dasharray',c);rf.setAttribute('stroke-dashoffset',c*(1-pct/100));
+  const rp=document.getElementById('rpct');rp.textContent=pct>0?`${pct}%`:'';rp.style.color=tr.col;
+  const list=document.getElementById('exlist');list.innerHTML='';
+  tr.ex.forEach((ex,i)=>{
+    const k=`s${S.wk}d${S.dy}e${i}`,ek=`exp${k}`;
+    const isDone=!!S.chk[k],isOpen=!!S.exp[ek],tim=AT[k];
+    let btns='';
+    if(ex.ds)btns+=`<button class="tbtn" onclick="stimer('${k}',${ex.ds},'${tr.col}')" style="background:${tim?'#FEE2E2':'#F0FDF4'};color:${tim?'#991B1B':'#166534'};border:1px solid ${tim?'#FCA5A5':'#86EFAC'}">${tim?'⏹ Stop':'▶ Chrono'}</button>`;
+    if(ex.hiit)btns+=`<button class="tbtn" onclick="shiit('${k}',${ex.hiit.w},${ex.hiit.r},${ex.hiit.n},'${tr.col}')" style="background:${tim?'#FEE2E2':'#FFF7ED'};color:${tim?'#991B1B':'#C2410C'};border:1px solid ${tim?'#FCA5A5':'#FED7AA'}">${tim?'⏹ Stop':'🔥 Intervalle'}</button>`;
+    if(ex.tips)btns+=`<button class="tbtn" onclick="ttip('${ek}')" style="background:${isOpen?'#EFF6FF':'#F8FAFC'};color:${isOpen?'#1D4ED8':'#64748B'};border:1px solid ${isOpen?'#BFDBFE':'#E2E8F0'}">${isOpen?'▲':'▼'} Détails</button>`;
+    if(ex.demo)btns+=`<a href="${ex.demo}" target="_blank" class="tbtn" style="background:#FFF7ED;color:#C2410C;border:1px solid #FED7AA;text-decoration:none">▶ Démo</a>`;
+    const row=document.createElement('div');
+    row.style.cssText=`border-bottom:${i<tr.ex.length-1?'1px solid #F8FAFC':'none'};opacity:${isDone?.4:1};transition:opacity .2s`;
+    row.innerHTML=`<div style="display:flex;gap:10px;align-items:flex-start;padding:10px 0">
+      <div class="chk${isDone?' done':''}" style="border-color:${isDone?tr.col:'#E2E8F0'};background:${isDone?tr.col:'#fff'}" onclick="tex('${k}','${tr.col}')">${isDone?'✓':''}</div>
+      <div style="flex:1;cursor:pointer" onclick="tex('${k}','${tr.col}')">
+        <div style="font-size:13px;font-weight:600;text-decoration:${isDone?'line-through':'none'}">${ex.l}</div>
+        <div style="font-size:12px;color:#94A3B8;margin-top:2px">${ex.d}</div>
+      </div>
+      <div style="display:flex;gap:4px;align-items:center;flex-wrap:wrap;justify-content:flex-end;flex-shrink:0;max-width:170px">
+        ${!isDone?'<span style="font-size:10px;color:#22C55E;font-weight:700">+50 XP</span>':''}
+        ${btns}
+      </div>
+    </div>
+    <div id="ti-${k}">${tim?tihtml(k):''}</div>
+    ${isOpen&&ex.tips?tipPanel(ex.tips):''}`;
+    list.appendChild(row);
+  });
+  document.getElementById('dbanner').style.display=pct===100?'block':'none';
+  if(pct===100)ubdg('first');
+}
+function tipPanel(tk){
+  const t=TIPS[tk];if(!t)return'';
+  const scs=[{k:'m',i:'💪',c:'#8B5CF6',l:'MUSCLES'},{k:'p',i:'📐',c:'#3B82F6',l:'POSITION'},{k:'mv',i:'🔄',c:'#22C55E',l:'MOUVEMENT'},{k:'e',i:'⚠️',c:'#EF4444',l:'ERREURS'},{k:'r',i:'🌬️',c:'#0EA5E9',l:'RESPIRATION'}];
+  return`<div class="tip-panel">${scs.filter(s=>t[s.k]).map(s=>`<div class="tip-sec"><span class="tip-lbl" style="color:${s.c}">${s.i} ${s.l}</span>${t[s.k]}</div>`).join('')}</div>`;
+}
+function ttip(ek){S.exp[ek]=!S.exp[ek];rtr();}
+function tex(k,col){
+  const was=!!S.chk[k];S.chk[k]=!was;
+  if(!was){xpearn(50);S.str=Math.max(S.str,1);document.getElementById('strh').textContent=S.str;document.getElementById('sbig').textContent=S.str;if(S.str>=3)ubdg('s3');if(S.str>=7)ubdg('s7');if(S.str>=14)ubdg('s14');}else xpearn(-50);
+  S.la=new Date().toDateString();save();rtr();
+}
+function csbdg(){if(S.str>=3)ubdg('s3');if(S.str>=7)ubdg('s7');if(S.str>=14)ubdg('s14');}
+
+// MENUS
+function rmen(){
+  const b=BF[S.dy],din=DIN[S.dy];
+  const items=[{t:"7h30",icon:"☀️",c:"#F59E0B",meal:b},{t:"13h00",icon:"🍽",c:"#22C55E",meal:{n:"Poulet ail & riz complet",items:["Poulet grille + 2 gousses ail","Riz complet","Salade oignons rouges + capres + huile olive","Fruit + the vert"],k:650,lmf:"Ail+Capres+Oignon rouge"}},{t:"16h30",icon:"🥜",c:"#3B82F6",meal:{n:"Skyr, noix & myrtilles",items:["Skyr nature 200g","Noix 20g (omega-3)","Myrtilles + framboises (rutine+quercetine)","Option: shake whey si seance intense"],k:255,lmf:"Myrtilles+Noix rutine+ALA"}},{t:"19h30",icon:"🍽",c:"#8B5CF6",meal:din}];
+  const list=document.getElementById('mlist');list.innerHTML='';
+  items.forEach((m,i)=>{
+    const div=document.createElement('div');div.style.cssText=`padding-bottom:10px;margin-bottom:10px;border-bottom:${i<items.length-1?'1px solid #F1F5F9':'none'}`;
+    div.innerHTML=`<div style="display:flex;gap:10px"><span style="font-size:18px;flex-shrink:0">${m.icon}</span><div style="flex:1"><div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px;margin-bottom:6px"><div><div style="font-size:10px;color:#94A3B8">${m.t}</div><div style="font-size:13px;font-weight:700">${m.meal.n||m.meal.name}</div></div><span style="font-size:12px;font-weight:700;color:${m.c}">${m.meal.k} kcal</span></div><div style="display:flex;flex-wrap:wrap;gap:4px">${(m.meal.items||[]).map(it=>`<span style="font-size:11px;color:#64748B;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:4px;padding:2px 7px">${it}</span>`).join('')}</div>${m.meal.cheat?'<div style="font-size:11px;color:#EF4444;margin-top:4px">🍔 Repas plaisir famille !</div>':''}${m.meal.t&&!m.meal.cheat?`<div style="font-size:11px;color:#94A3B8;margin-top:4px">⏱ ${m.meal.t}</div>`:''}${m.meal.tip?`<div style="font-size:11px;color:#F59E0B;margin-top:4px;font-weight:600">💡 ${m.meal.tip}</div>`:''}${m.meal.lmf?`<div style="font-size:10px;color:#7C3AED;margin-top:5px;font-weight:600;background:#F5F3FF;border:1px solid #DDD6FE;padding:3px 8px;border-radius:4px;display:inline-block">🧬 ${m.meal.lmf}</div>`:''}</div></div>`;
+    list.appendChild(div);
+  });
+}
+function rdef(){
+  const tr=gtr(S.wk,S.dy);
+  document.getElementById('dchips2').innerHTML=[{l:"Alimentation",v:"-500"},{l:"Chien 4×",v:"-400"},{l:"Séance",v:`-${tr.kcal||0}`},{l:"Glucides↓",v:"-180"}].map(s=>`<div style="background:#fff;border-radius:6px;padding:5px 10px;font-size:11px"><span style="color:#94A3B8">${s.l} </span><strong style="color:#16A34A">${s.v} kcal</strong></div>`).join('');
+  document.getElementById('dtotal').textContent=`Total : ~${500+400+(tr.kcal||0)+180} kcal · ≈ 1 kg de graisse / ${tr.kcal>0?'6':'7'} jours`;
+}
+
+// PROGRAMME TAB
+function rbdg(){const g=document.getElementById('bgrid');if(!g)return;g.innerHTML=BDGS.map(b=>{const u=S.bdg.includes(b.id);return`<div title="${b.d}" style="text-align:center;opacity:${u?1:.2};min-width:52px"><div style="font-size:22px;filter:${u?'none':'grayscale(100%)'}">${b.icon}</div><div style="font-size:9px;font-weight:600;color:${u?'#334155':'#94A3B8'};margin-top:3px;line-height:1.2">${b.n}</div>${u?`<div style="font-size:9px;color:#EAB308;font-weight:700">+${b.xp} XP</div>`:''}</div>`;}).join('');}
+function rbody(){const g=document.getElementById('bodygrid');if(!g)return;const cur=gp(S.wk);g.innerHTML=[0,1,2,3].map(p=>`<div style="flex:1;max-width:80px;text-align:center;opacity:${p>cur?.2:1};transition:opacity .4s">${bsvg(p,70)}${p===cur?`<div style="font-size:9px;font-weight:700;color:${PH[p].c}">← Maintenant</div>`:''}</div>`).join('');}
+function rwks(){
+  const list=document.getElementById('wlist');if(!list)return;list.innerHTML='';
+  for(let w=1;w<=7;w++){const ph=PH[gp(w)],isA=S.wk===w;const div=document.createElement('div');div.style.cssText=`background:${isA?ph.bg:'#fff'};border-radius:12px;border:1px solid ${isA?ph.c+'44':'#E2E8F0'};border-left:4px solid ${ph.c};padding:12px 14px;margin-bottom:8px;cursor:pointer`;div.innerHTML=`<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:6px"><span style="background:${ph.c}20;color:${ph.c};font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px">SEMAINE ${w} — ${ph.n.toUpperCase()}</span>${isA?'<span style="font-size:10px;color:#94A3B8">← En cours</span>':''}</div><div style="font-size:18px;margin-bottom:6px">${[0,1,2,3,4,5,6].map(d=>gtr(w,d).icon).join(' ')}</div><div style="font-size:11px;color:#64748B"><strong style="color:#334155">Pompes :</strong> ${["inclinées","normales","+ diamant","diamant"][gp(w)]} &nbsp;<strong style="color:#334155">Tractions :</strong> ${["assistées","bande lourde","bande légère","libres 🎯"][gp(w)]}</div>`;div.onclick=()=>{S.wk=w;showTab('today',document.querySelector('.nbtn'));ra()};list.appendChild(div);}
+}
+function rshop(){
+  const list=document.getElementById('shoplist');if(!list)return;list.innerHTML='';
+  Object.entries(SHOP).forEach(([cat,items])=>{let html=`<div class="card"><div class="card-body"><div style="font-size:14px;font-weight:700;margin-bottom:10px">${cat}</div>`;items.forEach((item,i)=>{const k=`sh${cat}${i}`,done=!!S.chk[k];html+=`<div onclick="tshop('${k}')" style="display:flex;gap:10px;align-items:center;padding:7px 0;border-bottom:${i<items.length-1?'1px solid #F8FAFC':'none'};cursor:pointer"><div style="width:20px;height:20px;border-radius:5px;border:2px solid ${done?'#22C55E':'#E2E8F0'};background:${done?'#22C55E':'#fff'};display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px;color:#fff;font-weight:700">${done?'✓':''}</div><span style="font-size:13px;color:${done?'#CBD5E1':'#334155'};text-decoration:${done?'line-through':'none'}">${item}</span></div>`;});html+='</div></div>';list.insertAdjacentHTML('beforeend',html);});
+}
+function tshop(k){S.chk[k]=!S.chk[k];save();rshop();}
+function rsupp(){
+  const list=document.getElementById('supplist');if(!list)return;list.innerHTML='';
+  SUPPS.forEach(s=>{list.insertAdjacentHTML('beforeend',`<div class="card" style="border-left:4px solid ${s.c}"><div class="card-body"><div style="display:flex;gap:12px"><div style="font-size:24px;flex-shrink:0">${s.icon}</div><div style="flex:1"><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px"><span style="font-size:15px;font-weight:800">${s.n}</span><span style="background:${s.c}15;color:${s.c};font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px">${s.pr}</span></div><div class="g2" style="margin-bottom:10px"><div style="background:#F8FAFC;border-radius:8px;padding:8px 10px"><div style="font-size:10px;color:#94A3B8;margin-bottom:2px">⏰ TIMING</div><div style="font-size:12px;color:#334155">${s.t}</div></div><div style="background:#F8FAFC;border-radius:8px;padding:8px 10px"><div style="font-size:10px;color:#94A3B8;margin-bottom:2px">💊 DOSE</div><div style="font-size:12px;color:#334155">${s.d}</div></div></div><div style="font-size:12px;color:#64748B;line-height:1.6;margin-bottom:8px"><strong style="color:#334155">Pourquoi : </strong>${s.w}</div><div style="display:flex;gap:12px;flex-wrap:wrap"><span style="font-size:11px;color:#94A3B8">🏷 ${s.b}</span><span style="font-size:12px;font-weight:700;color:#22C55E">${s.p}</span></div></div></div></div></div>`);});
+}
+
+// BOSS
+function openBoss(){const ph=PH[gp(S.wk)];document.getElementById('btit').textContent=`Bilan Semaine ${S.wk}`;document.getElementById('bxp').textContent=`${S.xp} XP`;document.getElementById('bstr').textContent=`${S.str} j`;document.getElementById('bci').style.border=`2px solid ${ph.c}`;document.getElementById('boss').classList.add('open');}
+
+// NAV
+function showTab(id,btn){
+  ['today','prog','shop','supp','sound','smoke'].forEach(t=>document.getElementById('tab-'+t).style.display=t===id?'block':'none');
+  document.querySelectorAll('.nbtn').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  if(id==='prog'){rbdg();rbody();rwks();}
+  if(id==='shop')rshop();
+  if(id==='supp')rsupp();
+  if(id==='sound'){renderSound();startViz();}
+  if(id==='smoke'){renderSmoke();}
+  if(id==='smoke'){renderSmoke();}
+}
+function ra(){uph();rwk();rdk();rwalk();rtr();rmen();rdef();}
+
+// INIT
+load();initDay();
+if('Notification' in window&&Notification.permission!=='granted'&&!S.alarm)document.getElementById('nbar').style.display='block';
+if(S.alarm&&Notification.permission==='granted')schedAlarm();
+renderMorning();ra();
+
+// ══ SOUND ENGINE ══════════════════════════════════════════════════════════════
+let audioCtx=null,soundNodes={},vizAnim=null,vizRunning=false;
+const SOUNDS=[
+  {id:'gamma40',name:'Focus & Performance',freq:40,type:'binaural',moment:'morning',icon:'🔥',color:'#EF4444',
+   desc:'40 Hz Gamma — Éveil cognitif, concentration maximale',
+   science:'Études 2024 : 40 Hz améliore cognition et humeur (Int J Neurosci). Parfait avant une séance HIIT.',
+   lmf:'Cortisol matinal géré → PDE non activée → cAMP préservé',
+   timing:'Au réveil · 10-15 min',
+   yt:'https://www.youtube.com/results?search_query=40+hz+gamma+binaural+beats+focus+energy'},
+  {id:'hiit_boost',name:'HIIT Power',freq:130,type:'pulse',moment:'workout',icon:'⚡',color:'#F97316',
+   desc:'Pulsations 130 BPM + base 40 Hz — Énergie maximale',
+   science:'Musique haute énergie 130-150 BPM = +15% endurance, +18% performance (méta-analyse 2022).',
+   lmf:'Catécholamines↑ → récepteurs β-adrénergiques → cAMP↑ → lipolyse pendant effort',
+   timing:'Pendant HIIT · Toute la séance',
+   yt:'https://www.youtube.com/results?search_query=workout+music+130+bpm+hiit+training+motivation'},
+  {id:'recovery',name:'Récupération Parasympathique',freq:10,type:'binaural',moment:'post',icon:'💆',color:'#22C55E',
+   desc:'10 Hz Alpha — Récupération, cortisol post-effort réduit',
+   science:'Ondes alpha (8-12 Hz) : relaxation active, cortisol post-exercice réduit, HRV↑.',
+   lmf:'Cortisol post-effort↓ → PDE3B moins activée → cAMP se reconstruit',
+   timing:'Après séance · 10-15 min',
+   yt:'https://www.youtube.com/results?search_query=alpha+waves+10+hz+binaural+beats+recovery+relaxation'},
+  {id:'theta7',name:'Pré-Sommeil LMF',freq:6,type:'binaural',moment:'sleep',icon:'😴',color:'#8B5CF6',
+   desc:'6 Hz Thêta — Relaxation profonde, cortisol nocturne réduit',
+   science:'RCT 60 jours (PubMed) : thêta beats → anxiété↓ p=0.004, cortisol mesuré réduit.',
+   lmf:'Cortisol nuit↓ → PDE inactive → lipolyse nocturne maximale dans lipomes',
+   timing:'30 min avant sommeil · 20-30 min',
+   yt:'https://www.youtube.com/results?search_query=theta+waves+6+hz+binaural+beats+deep+relaxation+sleep'},
+  {id:'delta2',name:'Sommeil Profond',freq:2,type:'binaural',moment:'sleep',icon:'🌙',color:'#1E40AF',
+   desc:'2 Hz Delta — Récupération cellulaire, GH maximale',
+   science:'Ondes delta 1-3 Hz : sommeil profond, sécrétion GH maximale, pink noise améliore synchronisation.',
+   lmf:'GH nocturne↑ = lipolyse maximale = brûlage graisse pendant sommeil',
+   timing:'Pendant le sommeil · Toute la nuit (très bas volume)',
+   yt:'https://www.youtube.com/results?search_query=delta+waves+2+hz+binaural+beats+deep+sleep+all+night'},
+  {id:'beta16',name:'Focus Travail',freq:16,type:'binaural',moment:'work',icon:'💡',color:'#0EA5E9',
+   desc:'16 Hz Beta — Vigilance, stress chronique réduit',
+   science:'fNIRS study 2022 : 16 Hz binaural beats = stress chronique↓, vigilance↑ (Biomedical Optics Express).',
+   lmf:'Stress chronique↓ → cortisol journalier↓ → PDE moins activée → cAMP préservé',
+   timing:'Pendant le travail · En continu',
+   yt:'https://www.youtube.com/results?search_query=beta+waves+16+hz+binaural+beats+focus+work+concentration'},
+  {id:'nature',name:'Sons Nature — Récupération',freq:0,type:'nature',moment:'post',icon:'🌿',color:'#16A34A',
+   desc:'Pluie + forêt — Système nerveux parasympathique',
+   science:'Sons nature = activation parasympathique documentée, HRV↑, cortisol↓. Aussi efficace que binaural beats.',
+   lmf:'Parasympathique↑ = cortisol↓ = cAMP préservé = lipolyse active',
+   timing:"Post-seance Repos nimporte quand",
+   yt:'https://www.youtube.com/results?search_query=nature+sounds+rain+forest+relaxation+stress+relief'},
+  {id:'528hz',name:'528 Hz Solfège',freq:528,type:'sine',moment:'work',icon:'✨',color:'#F59E0B',
+   desc:'528 Hz — Cortisol↓ · Oxytocine↑ (1 étude, résultats à confirmer)',
+   science:'Étude japonaise : 528 Hz → cortisol et chromogranine A réduits, oxytocine augmentée. Science préliminaire.',
+   lmf:'Cortisol↓ (si confirmé) → PDE moins activée → cAMP préservé',
+   timing:'Travail · Méditation · 20-30 min',
+   yt:'https://www.youtube.com/results?search_query=528+hz+solfeggio+frequency+healing+meditation'},
+  {id:'432hz',name:'432 Hz Accordage naturel',freq:432,type:'sine',moment:'work',icon:'🎵',color:'#94A3B8',
+   desc:'432 Hz — Détente subjective (preuves scientifiques limitées)',
+   science:'Expérience subjective rapportée : sons plus doux, naturels. Evidence scientifique directe limitée mais effets relaxants réels.',
+   lmf:'Via relaxation → cortisol↓ — mécanisme identique à la méditation',
+   timing:'Travail calme · Méditation · En fond',
+   yt:'https://www.youtube.com/results?search_query=432+hz+music+relaxation+meditation+ambient'},
+];
+
+const MOMENTS={morning:"🌅 Réveil & Pré-séance",workout:"🏋️ Pendant l'entraînement",post:"💆 Récupération post-séance",sleep:"😴 Avant & pendant le sommeil",work:"💡 Travail & concentration"};
+const FREQGUIDE=[
+  {hz:'1-4 Hz',name:'Delta',effet:'Sommeil profond · GH↑ · Récupération cellulaire',color:'#1E40AF'},
+  {hz:'4-8 Hz',name:'Thêta',effet:'Relaxation profonde · Cortisol↓ · Créativité',color:'#7C3AED'},
+  {hz:'8-12 Hz',name:'Alpha',effet:'Relaxation active · Récupération · HRV↑',color:'#22C55E'},
+  {hz:'13-30 Hz',name:'Beta',effet:'Concentration · Vigilance · Stress réduit',color:'#F59E0B'},
+  {hz:'30-100 Hz',name:'Gamma',effet:'Focus maximal · Cognition · Performance',color:'#EF4444'},
+  {hz:'528 Hz',name:'Solfège (limité)',effet:'Cortisol↓ · Oxytocine↑ (1 étude japonaise)',color:'#94A3B8'},
+];
+
+function getACtx(){if(!audioCtx||audioCtx.state==='closed'){audioCtx=new(window.AudioContext||window.webkitAudioContext)();}if(audioCtx.state==='suspended')audioCtx.resume();return audioCtx;}
+
+function playBinaural(id,freq,vol=0.3){
+  stopSoundById(id);
+  const ctx=getACtx();
+  const baseFreq=200;
+  const masterGain=ctx.createGain();masterGain.gain.value=vol;masterGain.connect(ctx.destination);
+  // Left: base freq
+  const oscL=ctx.createOscillator(),gainL=ctx.createGain();
+  const mergerL=ctx.createChannelMerger(2);
+  oscL.frequency.value=baseFreq;oscL.type='sine';
+  gainL.gain.value=1;oscL.connect(gainL);
+  // Right: base + beat freq
+  const oscR=ctx.createOscillator(),gainR=ctx.createGain();
+  oscR.frequency.value=baseFreq+freq;oscR.type='sine';
+  gainR.gain.value=1;oscR.connect(gainR);
+  // Stereo splitter
+  const splitter=ctx.createChannelSplitter(2),merger=ctx.createChannelMerger(2);
+  gainL.connect(merger,0,0);gainR.connect(merger,0,1);merger.connect(masterGain);
+  oscL.start();oscR.start();
+  soundNodes[id]={nodes:[oscL,oscR,masterGain,merger],gain:masterGain,ctx};
+  document.getElementById('sound-name').textContent=SOUNDS.find(s=>s.id===id)?.name||id;
+  document.getElementById('sound-freq').textContent=freq+' Hz binaural — base '+baseFreq+' Hz';
+}
+
+function playPulse(id,bpm,vol=0.3){
+  stopSoundById(id);
+  const ctx=getACtx();
+  const masterGain=ctx.createGain();masterGain.gain.value=vol;masterGain.connect(ctx.destination);
+  const interval=60/bpm;let time=ctx.currentTime;
+  const sched=()=>{
+    const osc=ctx.createOscillator(),env=ctx.createGain();
+    osc.frequency.value=80+Math.random()*20;osc.type='square';
+    env.gain.setValueAtTime(0,time);env.gain.linearRampToValueAtTime(0.4,time+0.01);
+    env.gain.exponentialRampToValueAtTime(0.001,time+0.08);
+    osc.connect(env);env.connect(masterGain);osc.start(time);osc.stop(time+0.1);
+    time+=interval;
+  };
+  for(let i=0;i<8;i++)sched();
+  const iv=setInterval(()=>{if(!soundNodes[id])return;const osc2=ctx.createOscillator(),env2=ctx.createGain();osc2.frequency.value=80+Math.random()*20;osc2.type='square';env2.gain.setValueAtTime(0,ctx.currentTime);env2.gain.linearRampToValueAtTime(0.4,ctx.currentTime+0.01);env2.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.08);osc2.connect(env2);env2.connect(masterGain);osc2.start();osc2.stop(ctx.currentTime+0.1);},interval*1000);
+  soundNodes[id]={nodes:[masterGain],gain:masterGain,iv,ctx};
+  document.getElementById('sound-name').textContent=SOUNDS.find(s=>s.id===id)?.name||id;
+  document.getElementById('sound-freq').textContent=bpm+' BPM pulse';
+}
+
+function playSine(id,freq,vol=0.15){
+  stopSoundById(id);
+  const ctx=getACtx();
+  const masterGain=ctx.createGain();masterGain.gain.value=vol;masterGain.connect(ctx.destination);
+  const osc=ctx.createOscillator();
+  osc.frequency.value=freq;osc.type='sine';
+  // Add slight reverb via delay
+  const delay=ctx.createDelay(0.5);delay.delayTime.value=0.3;
+  const delayGain=ctx.createGain();delayGain.gain.value=0.25;
+  osc.connect(masterGain);osc.connect(delay);delay.connect(delayGain);delayGain.connect(masterGain);
+  osc.start();
+  soundNodes[id]={nodes:[osc,masterGain,delay,delayGain],gain:masterGain,ctx};
+  document.getElementById('sound-name').textContent=SOUNDS.find(s=>s.id===id)?.name||id;
+  document.getElementById('sound-freq').textContent=freq+' Hz pure tone';
+}
+function playNature(id,vol=0.3){
+  stopSoundById(id);
+  const ctx=getACtx();
+  const masterGain=ctx.createGain();masterGain.gain.value=vol;masterGain.connect(ctx.destination);
+  // Pink noise
+  const bufSize=4096,buf=ctx.createBuffer(2,bufSize*2,ctx.sampleRate);
+  for(let c=0;c<2;c++){const d=buf.getChannelData(c);let b0=0,b1=0,b2=0,b3=0,b4=0,b5=0,b6=0;for(let i=0;i<bufSize*2;i++){const wn=(Math.random()*2-1);b0=0.99886*b0+wn*0.0555179;b1=0.99332*b1+wn*0.0750759;b2=0.96900*b2+wn*0.1538520;b3=0.86650*b3+wn*0.3104856;b4=0.55000*b4+wn*0.5329522;b5=-0.7616*b5-wn*0.0168980;d[i]=(b0+b1+b2+b3+b4+b5+b6+wn*0.5362)*0.11;b6=wn*0.115926;}}
+  const src=ctx.createBufferSource();src.buffer=buf;src.loop=true;
+  // Low pass for rain feel
+  const filter=ctx.createBiquadFilter();filter.type='lowpass';filter.frequency.value=800;
+  src.connect(filter);filter.connect(masterGain);src.start();
+  soundNodes[id]={nodes:[src,masterGain,filter],gain:masterGain,ctx};
+  document.getElementById('sound-name').textContent='Sons Nature';
+  document.getElementById('sound-freq').textContent='Pink noise filtré — parasympathique';
+}
+
+function playSoundById(id){
+  const s=SOUNDS.find(x=>x.id===id);if(!s)return;
+  const vol=(document.getElementById('vol-slider')?.value||40)/100;
+  if(s.type==='binaural')playBinaural(id,s.freq,vol);
+  else if(s.type==='pulse')playPulse(id,s.freq,vol);
+  else if(s.type==='nature')playNature(id,vol);
+  else if(s.type==='sine')playSine(id,s.freq,vol);
+  startViz();
+}
+
+function stopSoundById(id){
+  if(!soundNodes[id])return;
+  const n=soundNodes[id];
+  try{n.nodes.forEach(nd=>{try{if(nd.stop)nd.stop();if(nd.disconnect)nd.disconnect();}catch(e){}});}catch(e){}
+  if(n.iv)clearInterval(n.iv);
+  delete soundNodes[id];
+}
+
+function stopSound(){
+  Object.keys(soundNodes).forEach(stopSoundById);
+  document.getElementById('sound-name').textContent='—';
+  document.getElementById('sound-freq').textContent='Inactif';
+  stopViz();
+}
+
+function setVol(v){
+  document.getElementById('vol-val').textContent=v+'%';
+  Object.values(soundNodes).forEach(n=>{if(n.gain)n.gain.gain.value=v/100;});
+}
+
+// Visualizer
+function startViz(){
+  const canvas=document.getElementById('viz-canvas');if(!canvas)return;
+  const ctx2=canvas.getContext('2d');
+  canvas.width=canvas.offsetWidth*2||600;canvas.height=80;
+  let t=0;
+  function draw(){
+    vizAnim=requestAnimationFrame(draw);
+    ctx2.clearRect(0,0,canvas.width,canvas.height);
+    ctx2.fillStyle='#F8FAFC';ctx2.fillRect(0,0,canvas.width,canvas.height);
+    const activeSound=Object.keys(soundNodes)[0];
+    const s=SOUNDS.find(x=>x.id===activeSound);
+    const col=s?s.color:'#7C3AED';
+    ctx2.strokeStyle=col;ctx2.lineWidth=2;ctx2.beginPath();
+    const pts=100;
+    for(let i=0;i<pts;i++){
+      const x=(i/pts)*canvas.width;
+      const noise=Object.keys(soundNodes).length>0?(Math.sin(t*3+i*0.3)*0.3+Math.sin(t*7+i*0.7)*0.15+Math.sin(t*0.5+i*0.1)*0.4):0;
+      const y=canvas.height/2+noise*(canvas.height*0.35);
+      i===0?ctx2.moveTo(x,y):ctx2.lineTo(x,y);
+    }
+    ctx2.stroke();t+=0.05;
+  }
+  stopViz();draw();vizRunning=true;
+}
+function stopViz(){if(vizAnim)cancelAnimationFrame(vizAnim);vizRunning=false;}
+
+function renderSound(){
+  var pg=document.getElementById('sound-programs');
+  if(!pg)return;
+  var byMoment={};
+  SOUNDS.forEach(function(s){if(!byMoment[s.moment])byMoment[s.moment]=[];byMoment[s.moment].push(s);});
+  pg.innerHTML='';
+  Object.keys(byMoment).forEach(function(mom){
+    var sounds=byMoment[mom];
+    var card=document.createElement('div');
+    card.className='card';card.style.marginBottom='12px';
+    var inner='<div class="card-body" style="padding:0"><div style="padding:10px 14px;border-bottom:1px solid #E2E8F0;font-size:10px;font-weight:700;letter-spacing:2px;color:#94A3B8">'+MOMENTS[mom]+'</div>';
+    sounds.forEach(function(s,i){
+      inner+='<div style="padding:12px 14px;border-bottom:'+(i<sounds.length-1?'1px solid #F8FAFC':'none')+'">';
+      inner+='<div style="display:flex;gap:10px;align-items:flex-start">';
+      inner+='<div style="font-size:22px;flex-shrink:0">'+s.icon+'</div>';
+      inner+='<div style="flex:1">';
+      inner+='<div style="font-size:13px;font-weight:700;color:#1E293B;margin-bottom:4px">'+s.name+'</div>';
+      inner+='<div style="font-size:11px;color:'+s.color+';font-weight:600;margin-bottom:8px">'+s.desc+'</div>';
+      inner+='<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px">';
+      inner+='<button data-sid="'+s.id+'" class="snd-play-btn" style="background:'+s.color+';color:#fff;border:none;border-radius:8px;padding:7px 12px;font-size:11px;font-weight:700;cursor:pointer">&#9654; Jouer</button>';
+      inner+='<a href="'+s.yt+'" target="_blank" style="background:#FF0000;color:#fff;border-radius:8px;padding:7px 12px;font-size:11px;font-weight:700;text-decoration:none;display:inline-block">&#9654; YT</a>';
+      inner+='</div>';
+      inner+='<div style="background:#F8FAFC;border-radius:6px;padding:8px 10px;margin-bottom:6px;font-size:11px;color:#475569;line-height:1.5">'+s.science+'</div>';
+      inner+='<div style="display:flex;gap:6px;flex-wrap:wrap">';
+      inner+='<span style="background:#EEF2FF;color:#4338CA;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px">&#8987; '+s.timing+'</span>';
+      inner+='<span style="background:#F5F3FF;color:#7C3AED;font-size:10px;font-weight:600;padding:2px 8px;border-radius:4px">&#129516; '+s.lmf+'</span>';
+      inner+='</div>';
+      inner+='</div></div></div>';
+    });
+    inner+='</div>';
+    card.innerHTML=inner;
+    pg.appendChild(card);
+  });
+  // Bind play buttons
+  document.querySelectorAll('.snd-play-btn').forEach(function(btn){
+    btn.addEventListener('click',function(){playSoundById(this.getAttribute('data-sid'));});
+  });
+  // Freq guide
+  var fg=document.getElementById('freq-guide');
+  if(!fg)return;
+  fg.innerHTML=FREQGUIDE.map(function(f,i){
+    return '<div style="display:flex;gap:12px;align-items:center;padding:10px 14px;border-bottom:'+(i<FREQGUIDE.length-1?'1px solid #F8FAFC':'none')+'"><div style="width:6px;height:32px;border-radius:3px;background:'+f.color+';flex-shrink:0"></div><div style="flex:1"><div style="display:flex;gap:8px;align-items:baseline"><span style="font-family:monospace;font-size:12px;font-weight:700;color:'+f.color+'">'+f.hz+'</span><span style="font-size:11px;font-weight:700;color:#334155">'+f.name+'</span></div><div style="font-size:11px;color:#64748B;margin-top:2px">'+f.effet+'</div></div></div>';
+  }).join('');
+}
+
+function renderSmoke(){
+  const wk=currentSmWeek();
+  const plan=SMOKE_PLAN[wk-1];
+  const today=todayKey();
+  const todayCount=smData.log[today]||null;
+
+  // Stats
+  document.getElementById('sm-today').textContent=todayCount!==null?todayCount+'🚬':'—';
+  if(todayCount!==null){
+    document.getElementById('sm-today').style.color=todayCount<=plan.cigs?'#22C55E':'#DC2626';
+  }
+
+  // Streak (days under target)
+  let streak=0;
+  const keys=Object.keys(smData.log).sort().slice(-30);
+  for(let i=keys.length-1;i>=0;i--){
+    const wkNum=Math.min(7,Math.max(1,Math.floor((new Date(keys[i])-PS)/86400000/7)+1));
+    const target=SMOKE_PLAN[wkNum-1].cigs;
+    if(smData.log[keys[i]]<=target)streak++;else break;
+  }
+  document.getElementById('sm-streak').textContent=streak;
+
+  // Money saved (assume 10 CHF/pack, 20 cigs/pack)
+  const totalSmoked=Object.values(smData.log).reduce((a,b)=>a+b,0);
+  const totalDays=Object.keys(smData.log).length;
+  const baseline=totalDays*20;
+  const saved=Math.round(((baseline-totalSmoked)/20)*10);
+  document.getElementById('sm-saved').textContent=Math.max(0,saved);
+
+  // Today's schedule
+  const schedEl=document.getElementById('smoke-today-schedule');
+  const now=new Date();
+  const currentHour=now.getHours()+now.getMinutes()/60;
+  schedEl.innerHTML='<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px">'+
+    plan.schedules.map((h,i)=>{
+      const hNum=parseFloat(h.replace('h','.'));
+      const past=hNum<currentHour;
+      const next=!past&&(i===0||(parseFloat(plan.schedules[i-1].replace('h','.'))<currentHour));
+      return '<div style="background:'+(past?'#F0FDF4':next?plan.color:'#F1F5F9')+';border:2px solid '+(past?'#86EFAC':next?plan.color:'#E2E8F0')+';border-radius:8px;padding:6px 10px;text-align:center;min-width:60px"><div style="font-family:monospace;font-size:13px;font-weight:700;color:'+(past?'#16A34A':next?'#fff':'#64748B')+'">'+h+'</div><div style="font-size:9px;color:'+(past?'#16A34A':next?'#fff':'#94A3B8')+';">'+(past?'✓':next?'NEXT':'⏳')+'</div></div>';
+    }).join('')+'</div>'+
+    '<div style="background:#FFF7ED;border-radius:8px;padding:10px 12px"><div style="font-size:10px;font-weight:700;letter-spacing:1px;color:#C2410C;margin-bottom:6px">RÈGLES S'+wk+'</div>'+
+    plan.rules.map(r=>'<div style="font-size:11px;color:#92400E;margin-bottom:3px">→ '+r+'</div>').join('')+
+    '</div>';
+
+  // Week plan
+  const wp=document.getElementById('smoke-week-plan');
+  wp.innerHTML='';
+  SMOKE_PLAN.forEach((p,i)=>{
+    const isActive=i+1===wk;
+    const div=document.createElement('div');
+    div.style.cssText='background:'+(isActive?'#fff':'#F8FAFC')+';border-radius:12px;border:1px solid '+(isActive?p.color+'66':'#E2E8F0')+';border-left:4px solid '+p.color+';padding:12px 14px;margin-bottom:8px;cursor:pointer;transition:all .2s';
+    div.innerHTML='<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px"><div><span style="background:'+p.color+'20;color:'+p.color+';font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px">S'+p.wk+' — MAX '+p.cigs+' CIGARETTES</span>'+(isActive?'<span style="font-size:10px;color:#94A3B8;margin-left:8px">← En cours</span>':'')+'<div style="font-size:13px;font-weight:700;color:#1E293B;margin-top:6px">'+p.label+'</div></div><div style="font-family:monospace;font-size:22px;font-weight:900;color:'+p.color+'">'+p.cigs+'</div></div><div style="font-size:11px;color:#64748B;line-height:1.6;margin-bottom:8px">'+p.desc+'</div><div style="display:flex;flex-wrap:wrap;gap:4px">'+p.schedules.map(h=>'<span style="background:'+p.color+'15;color:'+p.color+';font-family:monospace;font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px">'+h+'</span>').join('')+'</div>';
+    wp.appendChild(div);
+  });
+}
+
+function openSmokeLog(){document.getElementById('smoke-modal').style.display='flex';document.getElementById('sm-input').value='';}
+function closeSmokeLog(){document.getElementById('smoke-modal').style.display='none';}
+function saveSmokeLog(){
+  const val=parseInt(document.getElementById('sm-input').value);
+  if(isNaN(val)||val<0)return;
+  smData.log[todayKey()]=val;smSave();
+  closeSmokeLog();renderSmoke();
+  toast(val===0?'0 cigarette INCROYABLE':val<=SMOKE_PLAN[currentSmWeek()-1].cigs?'Objectif respecte: '+val+' clopes':'Au-dessus objectif — demain tu reprends');
+}
+
+</script>
+
+<script>
+if('serviceWorker' in navigator){
+  window.addEventListener('load', function(){
+    navigator.serviceWorker.register('sw.js').then(function(reg){
+      console.log('SW registered');
+    }).catch(function(err){
+      console.log('SW error:', err);
+    });
+  });
+}
+</script>
+
+<!-- Capacitor integration for native Android APK -->
+<script>
+(function(){
+  // Detect if running inside Capacitor
+  var isCapacitor = window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform();
+  if(!isCapacitor) return;
+
+  // Handle Android back button
+  document.addEventListener('backbutton', function(e){
+    // If a modal is open, close it
+    var boss = document.getElementById('boss');
+    var morning = document.getElementById('morning');
+    var alarm = document.getElementById('alarm');
+    if(boss && boss.classList.contains('open')){
+      boss.classList.remove('open');
+      e.preventDefault();
+      return;
+    }
+    if(alarm && alarm.classList.contains('open')){
+      alarm.classList.remove('open');
+      e.preventDefault();
+      return;
+    }
+    if(morning && !morning.classList.contains('hidden')){
+      morning.classList.add('hidden');
+      e.preventDefault();
+      return;
+    }
+  });
+
+  // Safe area padding for devices with notch
+  document.documentElement.style.setProperty('--safe-top', 'env(safe-area-inset-top, 0px)');
+  document.documentElement.style.setProperty('--safe-bottom', 'env(safe-area-inset-bottom, 0px)');
+  var hdr = document.getElementById('hdr');
+  if(hdr) hdr.style.paddingTop = 'env(safe-area-inset-top, 0px)';
+})();
+</script>
+</body>
+</html>
