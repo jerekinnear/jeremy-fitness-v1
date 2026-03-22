@@ -1007,43 +1007,5 @@ if('serviceWorker' in navigator){
   });
 }
 </script>
-
-<!-- Capacitor integration for native Android APK -->
-<script>
-(function(){
-  // Detect if running inside Capacitor
-  var isCapacitor = window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform();
-  if(!isCapacitor) return;
-
-  // Handle Android back button
-  document.addEventListener('backbutton', function(e){
-    // If a modal is open, close it
-    var boss = document.getElementById('boss');
-    var morning = document.getElementById('morning');
-    var alarm = document.getElementById('alarm');
-    if(boss && boss.classList.contains('open')){
-      boss.classList.remove('open');
-      e.preventDefault();
-      return;
-    }
-    if(alarm && alarm.classList.contains('open')){
-      alarm.classList.remove('open');
-      e.preventDefault();
-      return;
-    }
-    if(morning && !morning.classList.contains('hidden')){
-      morning.classList.add('hidden');
-      e.preventDefault();
-      return;
-    }
-  });
-
-  // Safe area padding for devices with notch
-  document.documentElement.style.setProperty('--safe-top', 'env(safe-area-inset-top, 0px)');
-  document.documentElement.style.setProperty('--safe-bottom', 'env(safe-area-inset-bottom, 0px)');
-  var hdr = document.getElementById('hdr');
-  if(hdr) hdr.style.paddingTop = 'env(safe-area-inset-top, 0px)';
-})();
-</script>
 </body>
 </html>
